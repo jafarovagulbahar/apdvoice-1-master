@@ -1129,14 +1129,19 @@ table .total td {
    display: inline-block !important;
 }
 
-/* .content-body-appointmentlist{
+.content-body-class{
     position: relative;
 }
 .table-section{
     position: absolute;
-} */
+}
 
-
+@media (min-width: 760px) and (max-width: 1024px) {
+    .content-body-class{
+        overflow-x: scroll;
+        width: 768px;
+    }
+}
 
 @media only screen and (max-width: 760px) {
    
