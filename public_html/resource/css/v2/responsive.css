@@ -1,0 +1,124 @@
+
+@media (min-width: 100px) {
+    .nav-menu2 a {
+        width: 56px;
+    }
+    .nav-menu2 a span {
+        display: none;
+        color: #fff;
+    }
+
+}
+
+@media (min-width: 576px){
+    .modal-dialog{
+        margin: 10.75rem auto;
+        max-width: 1023px;
+    }
+}
+
+@media (min-width: 768px){
+    /* #hero{
+       height: 34vh;
+     }*/#hero .container {
+        padding-bottom: 0px;
+    }
+    .banner{
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 500px){
+    #header .logo img {
+        height: 30px;
+    }
+    .nav-menu2 a:hover span, .nav-menu2 li:hover > a span {
+        display:block;
+        font-size: 12px;
+    }.nav-menu2 a {
+        padding: 0px 10px;
+        height: 35px;
+        width: 35px;
+    }
+    .nav-menu2 a span {
+        padding: 0 5px 0 3px;
+    }
+    .nav-menu2 a i{
+        font-size: 12px;
+    }.nav-menu2 a:hover, .nav-menu2 li:hover > a {
+        width:115px !important;
+
+    }
+    .appointment-form-intro .form-control{
+        height: 40px !important;
+        font-size: 12px;
+    }
+    .dropdown-select{
+        line-height: 30px;
+    }
+    .btn-custom {
+        padding-top: 1px;
+        font-size: 10px;
+        padding: 12px 0px !important;
+    }
+    .btn-custom b{
+        font-size: 10px !important;
+        padding: 0px 0px !important;
+    }.btn-custom i{
+        font-size: 10px !important;
+    }
+    #hero .container {
+        padding-bottom: 0px;
+    }
+    .modal-dialog{
+        margin: 13.75rem auto;
+    }
+    .dataTables_filter > label > input:focus {
+        width: 50px !important;
+    }
+    .dt-button{
+        padding: 4px;
+        font-size: 10px ! important;
+    }.dt-button i{
+        font-size: 10px !important;
+    }.dataTables_length{
+        font-size: 10px !important;
+    }.dataTables_length option{
+        font-size: 10px;
+    }
+    .dataTables_filter{
+        font-size: 10px !important
+
+    }.dataTables_info{
+        font-size: 10px;
+    }
+    .copyright{
+        font-size: 10px;
+    }#example{
+        font-size: 12px;
+    }
+    #patinetlistcombo {
+        width: 300px;
+    }
+}
+
+@media screen and (min-device-width: 201px) and (max-device-width: 399px) { 
+    .nav-menu2 a:hover span, .nav-menu2 li:hover > a span {
+        font-size: 10px;
+    }.nav-menu2 a {
+        padding: 0px 8px;
+        height: 25px;
+        width: 25px;
+
+    }.nav-menu2 a:hover, .nav-menu2 li:hover > a {
+        width:97px !important;
+
+    }.btn-custom b{
+        font-size: 8px !important;
+        padding: 0px 0px !important;
+    }.btn-custom i{
+        font-size: 8px !important;
+    }#example{
+        font-size: 10px;
+    }
+}
