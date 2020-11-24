@@ -1110,10 +1110,10 @@ table td {
     border-right: 1px solid #ecf0f1;
 }
 table th {
-    background-color: #4ecdc4;
+    background-color:#d3dde6;
 }
 table tr:nth-of-type(even) td {
-    background-color: #d9f4f2;
+    background-color: #fcfbff;
 }
 table .total th {
     background-color: white;
@@ -1149,7 +1149,7 @@ table .total td {
         display: none;
    }
     table tr:nth-of-type(even) td:first-child {
-        background-color: #d9f4f2;
+        background-color: #ecf5fc;
    }
     table tr:nth-of-type(odd) td:first-child {
         background-color: white;
@@ -1189,7 +1189,7 @@ table .total td {
     right: 15px;
     width: 20px;
     height: 2px;
-    background: #39a098;
+    background: #0563bb;
 }
 .apd-table-td:nth-child(1):after{
     transform: rotate(-90deg);
