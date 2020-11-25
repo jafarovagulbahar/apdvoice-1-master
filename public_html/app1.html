@@ -17,9 +17,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
         <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.jqueryui.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.jqueryui.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css"> -->
+    
 
         <!-- Vendor CSS Files -->
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -29,22 +27,11 @@
         <link href="resource/css/v2/style.css" rel="stylesheet">
         <link href="resource/css/v2/responsive.css" rel="stylesheet">
 
+        <!-- JS FILES -->
         <script src="resource/js/jquery.min.js"></script>
         <script src="resource/js/link.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="resource/js/bootstrap.min.js"></script>
-        <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.jqueryui.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.jqueryui.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.js"></script>   -->
-
 
         <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/FileSaver.js"></script>
         <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/jquery.wordexport.js"></script>
@@ -54,23 +41,31 @@
         <script src="resource/js/v2/utility.js"></script>
 
     </head>
-
-    <!-- ======= Header ======= -->
+<body>
+        <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
-
-        <div class="container d-flex align-items-center">
-            <a href="#" class="logo mr-auto"><img src="resource/img/logo.png" alt="" class="img-fluid"></a>
-            <nav class="nav-menu d-none d-lg-block">
-                <ul>
+    <div class="container d-flex align-items-center">
+        <a href="#" class="logo mr-auto">
+            <img src="resource/img/logo.png" alt="" class="img-fluid">
+        </a>
+        <nav class="nav-menu d-none d-lg-block">
+             <ul>
                     <!-- Home Navbar menu -->
-                    <li class="drop-down"><a href="#">Ana səhifə <i class="fa fa-angle-down"></i></a>
-                        <ul>
-                            <li class="dropMenu "> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
-                            <li class="dropMenu "> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Pasients</a></li>
-                        </ul>
+                <li class="drop-down"><a href="#">Ana səhifə <i class="fa fa-angle-down"></i></a>
+                    <ul>
+                        <li class="dropMenu "> 
+                            <a onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a>
+                        </li>
+                        <li class="dropMenu "> 
+                            <a  style="cursor:pointer" onclick="menuPatientListLoad()">Pasients</a>
+                        </li>
+                     </ul>
                     </li>
                     <!-- Finance Navbar menu -->
-                    <li class="drop-down"><a href="#">Maliyyə <i class="fa fa-angle-down"></i></a>
+                    <li class="drop-down">
+                        <a href="#">Maliyyə 
+                            <i class="fa fa-angle-down"></i>
+                        </a>
                         <ul>
                             <li class="dropMenu"><a href="#main">main</a></li>
                             <li class="dropMenu"><a href="#">Drop Down 1</a></li>
@@ -107,19 +102,92 @@
                             <li class="megamenu_" page_id="page_changepwd"> <a href="#"><i class="fa fa-edit"></i> <span qlang="">Change Password</span></a> </li> 
 
                             <li><a onclick="javascript:logout()" href="#"><i class="fa fa-sign-out"></i><span qlang="">Logout</span></a></li> 
-                        </ul> </li>
-                </ul>
+                        </ul>
+                    </li>
+                   </ul>
                 </li>
-                </ul>
-            </nav><!-- .nav-menu -->
-
+            </ul>
+            </nav>
+            <!--end .nav-menu -->
+            
+            <!-- Filter menu -->
+            <ul>
+              <li>
+                <span class="menu-filter" onclick="toggle()"><i class="fa fa-filter"></i></span>
+             </li>
+           </ul>
 
         </div>
-    </header><!-- End Header -->
 
-    <div id="page"> 
+        <!-- Filter content-->
+        <div id="filter-content">       
+            <div class="col-12 mt-3 mb-3 d-flex justify-content-end">
+                <div class="col-11">Filter</div>
+                <div class="col-1 menu-filter-close"  onclick="toggle()"></div>
+            </div>
+
+            <div class="col-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" >
+                        
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
+                           Item 1
+                          </a>
+
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" >
+                          <div class="panel-body">
+                            FITLER CONTENT
+                            FITLER CONTENT
+                            FITLER CONTENT
+                          </div>
+                        </div>
+                      </div>
+                     
+                     
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" >
+                        
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
+                           Item 1
+                          </a>
+
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" >
+                          <div class="panel-body">
+                            FITLER CONTENT
+                            FITLER CONTENT
+                            FITLER CONTENT
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" >
+                        
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
+                           Item 1
+                          </a>
+
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" >
+                          <div class="panel-body">
+                            FITLER CONTENT
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  
+            </div>
+          
+        </div>
+    </header>
+    <!-- End Header -->
+
         <!-- ======= patient List ======= -->
-        <section id="apdDataList " class="patientList">
+        <section id="apdDataList " class="patientList">    
             <div class="container">     
                 <div class="col-12">
                     <div class="row headerMenu">
@@ -155,8 +223,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <button class="btn-custom form-control add-patinet-btn"  data-toggle="modal" data-target="#pasientAddModal" onclick="AddNewPasientArea()"><b>Pasient əlavə et <i class="fa fa-plus"> </i></b></button>
+                                    <div class="form-group d-flex justify-content-center align-items-center">
+                                        <button class="d-flex justify-content-center align-items-center btn-custom form-control add-patinet-btn"  data-toggle="modal" data-target="#pasientAddModal" onclick="AddNewPasientArea()"><b>Pasient əlavə et <i class="fa fa-plus"> </i></b></button>
                                     </div>
                                 </div>
                             </div>
@@ -166,12 +234,10 @@
 
 
                 <!-- ======= sessia List ======= -->
-
                 <div class="col-md-12 apd-page-btn" id='bodyDiv' style="display: none;">
 
                 </div>
 
-           
 
            <div class="col-12 d-flex justify-content-center" >
             <div class="content table-section">
@@ -209,7 +275,6 @@
          
         </section>
 
-    </div>
 
     <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
@@ -728,7 +793,13 @@
     }).resize();
 
 
-
+  function toggle() {
+    var nav = document.querySelector("#filter-content")
+    var close= document.querySelector('.menu-filter-close')
+    nav.classList.toggle("open");
+    close.classList.toggle("open");
+    
+}
 
     </script>
 </body>

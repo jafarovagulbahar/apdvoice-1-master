@@ -28,6 +28,10 @@ h1, h2, h3, h4, h5, h6 {
 .hidden{
     display: none;
 }
+ul{
+    list-style: none;
+    margin-bottom: 0rem;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -60,40 +64,6 @@ h1, h2, h3, h4, h5, h6 {
 .datepicker-dropdown {
     padding: 20px !important;
 }
-
-/*--------------------------------------------------------------
-# Top Bar
---------------------------------------------------------------*/
-/*#topbar {
-background: #fff;
-height: 40px;
-font-size: 14px;
-transition: all 0.5s;
-}
-
-#topbar.topbar-scrolled {
-top: -40px;
-}
-
-#topbar .contact-info a {
-line-height: 1;
-color: #444444;
-transition: 0.3s;
-}
-
-#topbar .contact-info a:hover {
-color: #1977cc;
-}
-
-#topbar .contact-info i {
-color: #1977cc;
-padding-right: 4px;
-margin-left: 15px;
-}
-
-#topbar .contact-info i:first-child {
-margin-left: 0;
-}*/
 
 /*--------------------------------------------------------------
 # Header
@@ -665,6 +635,9 @@ selectBox with search
     padding: 5px 35px;
 }
 
+.add-patinet-btn{
+    line-height: 1 !important;
+}
 /*-------------------------------------
 MAIN SELEXBOX
 ------------------------------------*/
@@ -940,16 +913,19 @@ table.dataTable.dtr-inline.collapsed tbody td:first-child:before, table.dataTabl
     padding: 2px 6px;
     border-radius: 50%;
     box-shadow:0px 1px 5px #aba8d4;
+    cursor: pointer;
 }
 .edit-icon{
     padding: 2px 5px;
     border-radius: 50%;
     box-shadow:0px 1px 5px #aba8d4;
+    cursor: pointer;
 }
 .question-icon{
     padding: 2px 6px;
     border-radius: 50%;
     box-shadow:0px 1px 5px #aba8d4;
+    cursor: pointer;
 }
 .trash-icon:focus{
     padding: 2px 6px;
@@ -1004,6 +980,13 @@ label {
     border: none;
     border-radius: 30px;
 }
+.form-control{
+    height: 32px;
+    line-height: 32px;
+    box-shadow: 0 1px 4px  #410a5347;
+    border: none;
+    border-radius: 30px;
+}
 .apd-form-input_constHeader{
     height: 32px;
     line-height: 1;
@@ -1014,6 +997,9 @@ label {
 .dropMenuQues{
     height: 300px;
     overflow: auto;
+}
+.dropMenu a{
+    cursor: pointer;
 }
 
 /* NewSessiaModal in checkbox */
@@ -1071,7 +1057,7 @@ label {
     display: flex;
 }
 
-/* ----------------------------------------PASİENT TABLE PAGE------------------------------------ */
+/* -----------------PASİENT TABLE PAGE--------------- */
 .pasientTableSection{
     padding-top: 180px;
 }
@@ -1136,6 +1122,94 @@ table .total td {
     position: absolute;
 }
 
+/*============ Table Filer section============ */
+
+#filter-content{
+    position: absolute;
+    -moz-box-shadow: 0px 10px 8px rgb(100,100,100);
+    -webkit-box-shadow: 0px 10px 8px rgb(100,100,100);
+    box-shadow: 0px 10px 8px rgb(100,100,100);
+	background: rgb(255, 255, 255);
+	width: 300px;
+	height: 100vh;
+	overflow-y: auto;
+	transition-property: transform;
+	transition-duration: .4s;
+	transform: translateX(320px);
+    right: 0px;
+}
+#filter-content.open{
+	transform: translateX(0);
+}
+.menu-filter{
+    background: #f2f1fa;
+    padding: 4px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.menu-filter:hover{
+    background: #d3cff0;
+    transition: background-color 0.5s ease;
+   
+}
+.menu-filter i{
+    margin-top: 10px;
+    color: #04427d;
+}
+
+.menu-filter-close{
+    position: relative;
+}
+.menu-filter-close::after,
+.menu-filter-close::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+    width: 13px;
+    height: 1px;
+    background: #04427d;
+}
+.menu-filter-close.open::after{
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+}
+.menu-filter-close::before{
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+.menu-filter-close:after{
+    transform: rotate(0deg);
+}
+.menu-filter-close{
+    border-radius: 50%;
+    height: 25px;
+    width: 30px;
+    background: #f2f1fa;
+    cursor: pointer;
+}
+.menu-filter-close:hover{
+    background: #d3cff0;
+    transition: background-color 0.5s ease;
+}
+
+/* ============ACCORDIAN FILTER=============== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ______________________-RESPONSIVE___________________________ */
 @media (min-width: 760px) and (max-width: 1024px) {
     .content-body-class{
         overflow-x: scroll;
@@ -1149,7 +1223,7 @@ table .total td {
         display: none;
    }
     table tr:nth-of-type(even) td:first-child {
-        background-color: #ecf5fc;
+        background-color: #fcfbff;
    }
     table tr:nth-of-type(odd) td:first-child {
         background-color: white;
