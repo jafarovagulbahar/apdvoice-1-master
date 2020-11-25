@@ -1233,6 +1233,7 @@ function PasientDataTable(res) {
             .append($('<th>').append('Qan qrupu'))
             .append($('<th>').append('Rh Faktor'))
             .append($('<th>').append('Ölkə'))
+   
             .append($('<th>').append('Şəhər'))
             .append($('<th>').append('İzahat'))
             .append($('<th>').append('Ətraflı'))
