@@ -1236,6 +1236,7 @@ function PasientDataTable(res) {
             .append($('<th>').append('Şəhər'))
             .append($('<th>').append('İzahat'))
             .append($('<th>').append('Ətraflı'))
+
             .append($('<th>').addClass('noExport').append('Silmək'))
 
     PasientThead.append(pT);
@@ -1286,6 +1287,7 @@ function PasientDataTable(res) {
                     .addClass('_3p ')
                     .append(o.occupationOther))
                  // -----------------------------------
+                 
                 .append($('<th>')
                     .append('Ailə vəziyyəti')
                     .addClass('mobile-header'))
