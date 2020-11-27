@@ -32,6 +32,57 @@ ul{
     list-style: none;
     margin-bottom: 0rem;
 }
+
+/* title-tip down */
+.title-tip[orginal-title]:hover {
+    position: relative;
+  }
+  .title-tip[orginal-title]:hover:before {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 99999;
+    content: attr(orginal-title);
+    margin-top: 0.5em;
+    padding: 5px;
+    width: 50px;    /* change it */
+    overflow: hidden;
+    word-wrap: break-word;
+    font-size: inherit;
+    color: #FFF;
+    font-size: 12px;
+    text-align: center;
+    background-color: rgb(50, 50, 50);
+    box-sizing: border-box;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  }
+  .title-tip[orginal-title]:hover:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 99999;
+    content: '';
+    margin-left: -0.125em;
+    width: 0;
+    height: 0;
+    border: 0.25em dashed transparent;
+    border-bottom: 0.25em solid #222;
+    font-size: inherit;
+  }
+
+/* ===============MULTI SELECT========== */
+.multiselect-container>li>a>label{
+    padding: 7px 20px 7px 14px;
+}
+.multiselect-container.dropdown-menu{
+    max-height: 200px;
+    overflow: auto;
+}
+.multiselect{
+    width: 145px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -857,7 +908,7 @@ div.dt-buttons{
     position: relative !important;
 }
 
-.dataTables_filter > label:after {
+.dataTables_filter :after {
     content: "";
     background: #000000;
     width: 1px !important;
@@ -1143,7 +1194,7 @@ table .total td {
 }
 .menu-filter{
     background: #f2f1fa;
-    padding: 4px 8px;
+    padding: 0px 8px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -1168,10 +1219,10 @@ table .total td {
     transform: translateY(-50%);
     right: 8px;
     width: 13px;
-    height: 1px;
-    background: #04427d;
+    height: 2px;
+    background: #ddd;
 }
-.menu-filter-close.open::after{
+.menu-filter-close::after{
     transform: rotate(-45deg);
     transition: all 0.5s ease;
 }
@@ -1180,21 +1231,141 @@ table .total td {
     transition: all 0.5s ease;
 }
 .menu-filter-close:after{
-    transform: rotate(0deg);
+    transform: rotate(-45deg);
 }
 .menu-filter-close{
     border-radius: 50%;
     height: 25px;
     width: 30px;
-    background: #f2f1fa;
     cursor: pointer;
 }
 .menu-filter-close:hover{
-    background: #d3cff0;
+    background: #f2f1fa;
     transition: background-color 0.5s ease;
+}
+.content-fiter{
+    height: 88vh;
+    overflow: auto;
 }
 
 /* ============ACCORDIAN FILTER=============== */
+/* FILTER COUNT */
+.count-style{
+    background: #ebebee;
+    padding: 0px 7px;
+    border-radius: 50%;
+    color: #6f6f75;
+}
+
+.panel-witdh{
+    width: 80%;
+}
+.panel-default{
+    position: relative;   
+    border-bottom: 1px solid #ddd;
+  
+}
+
+.panel-default a{
+    text-decoration: none;
+    width: 100%;
+    font-size: 14px;
+    line-height: 25px;
+    color: #000;
+    font-weight: 500;
+}
+.panel-heading:hover{
+    background-color: rgba(221, 221, 221, 0.25);
+}
+
+.panel-heading{
+    padding: 5px 15px;
+    cursor: pointer;
+}
+.panel-collapse{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.panel-default>.panel-heading [aria-expanded="true"]:after {
+    transform: rotate(-90deg);
+    position: absolute;
+	content: '\2039';
+	font-size: 18px;
+	right: 25px;
+	top: 0px;
+	transition: transform .15s ease-in-out;
+    color:#ddd;
+  }
+  
+  .panel-default>.panel-heading [aria-expanded="false"]:after {
+    position: absolute;
+	display: block;
+	content: '\2039';
+	font-size: 18px;
+	right: 25px;
+	top: 0px;
+	transition: transform .15s ease-in-out;
+    color:#ddd;
+ 
+  }
+
+/* pasient filter */
+.filter-input{
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+#pastient-combo.dropdown-menu{
+    width: 260px !important;
+}
+.pasient-field {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.filter-buttons-close{
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.filter-buttons-close::after,
+.filter-buttons-close::before{
+    content: "";
+    position: absolute;
+    width: 13px;
+    height: 2px;
+    background: #ddd;
+  
+
+}
+.filter-buttons-close::after{
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+.filter-buttons-close::before{
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+}
+
+.pasient-field div{
+background-color: #f7f5f3;
+border-radius: 30px;
+margin: 5px;
+padding: 5px 10px;
+width: auto;
+
+}
+.pasient-field div:hover{
+    background-color: #edebe8;
+}
+.patinet-filter-content-toggle.open{
+  display: none !important;
+}
+/* Gender */
+.gender-radio-buttons{
+    display: inline-grid;
+}
+
 
 
 

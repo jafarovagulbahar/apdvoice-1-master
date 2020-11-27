@@ -144,6 +144,28 @@
   });
 
  
- 
 
+
+  
 })(jQuery);
+
+// ===============FILTER FUNCTION=======================
+// Multi select function   
+function multiSelect(){
+  $('.multiple-checkboxes').multiselect({
+      includeSelectAllOption: true,
+    });
+    
+}
+
+function FilterSectionToggle() {
+  pasientFilterSection()
+
+  $('#filter-content').addClass('open')
+}
+
+function FilterSectionToggleClose() {
+  $('#filter-content').removeClass('open')
+
+}
+
