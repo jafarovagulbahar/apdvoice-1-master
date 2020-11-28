@@ -1661,6 +1661,31 @@ function getIncspection() {
 
 // ============= FILTER section======================
 
+// pasientName add filter content
+
+$(document).on("click", '#pastient-combo a', function () {  
+
+    let Val = $(this).parent().find('input').val();
+  
+     var filter=$('#fiter-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
+
+     var patientCount = $("#fiter-content .patinet-filter-content-toggle");
+     var badge=$('#badge-patient').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
+
 
 // 1.--------------------------------------------------
 //patientName filter search
@@ -1698,8 +1723,7 @@ function pasientComboFilter(res) {
         patientList.append(p);
     }
 }
-// 2 .-----------------------------------------------
-// Gender filter combo
+// 2 .------------GenderFn filter-----------------------------------
 function genderFnFilter() {
     
     var json = initJSON();
@@ -1710,27 +1734,48 @@ function genderFnFilter() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
           
-            var List = $('#gender-filter').addClass('multiple-checkboxes').attr('multiple','multiple');
+            var List = $('#gender-filter').html('');
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
-                var p = $('<option>')
+                var p = $('<a>')
+                         .attr('href','#')
+                    .addClass('dropdown-item')
                         .val(obj[i].itemKey)
                         .text(obj[i].itemValue);
                 List.append(p);
             }
-            multiSelect()         
+           
            
         }
     });
-
-
-  
-
 }
-// 3---------------------------------------------------
+
+
+$(document).on("click", '#gender-filter .dropdown-item', function () {  
+    let Val2 = $(this).text();
+  
+     var filter=$('#gender-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val2))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
+
+     var patientCount = $("#gender-content .patinet-filter-content-toggle");
+     var badge=$('#badge-gender').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
+// 3---------------EduFn Filter------------------------------------
 function educationFnFilter() {
 
     var json = initJSON();
@@ -1741,23 +1786,47 @@ function educationFnFilter() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
-            var List = $('#eduFilter')
-                    .addClass('multiple-checkboxes')
-                        .attr('multiple','multiple');
+            var List = $('#eduFilter').html('');
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
-                var p = $('<option>')
+                var p = $('<a>')
+                        .attr('href','#')
+                    .addClass('dropdown-item')
                         .val(obj[i].itemKey)
                         .text(obj[i].itemValue);
                 List.append(p);
             }
-            multiSelect()   
+         
         }
     });
 }
-// 4----------------------------------------------
+
+$(document).on("click", '#eduFilter .dropdown-item', function() { 
+    
+    console.log('ok')
+    let Val3 = $(this).text();
+  
+     var filter=$('#edu-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val3))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
+
+     var patientCount = $("#edu-content .patinet-filter-content-toggle");
+     var badge=$('#badge-edu').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
+// 4--------------MaritualStatusFn filter--------------------------------
 function maritalStatusFnFilter() {
     var json = initJSON();
     var data = JSON.stringify(json);
@@ -1767,23 +1836,47 @@ function maritalStatusFnFilter() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
-            var List2 = $('#maritualStatusFilter')
-                    .addClass('multiple-checkboxes')
-                        .attr('multiple','multiple');
+            var List2 = $('#maritualStatusFilter').html('');
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
-                var p = $('<option>')
+                var p = $('<a>')
+                        .attr('href','#')
+                    .addClass('dropdown-item')
                         .attr('value', obj[i].itemKey)
                     .append(obj[i].itemValue);
                 List2.append(p);
             }
-            multiSelect()   
+           
         }
     });
 }
-// 5------------------------------------------
+
+$(document).on("click", '#maritualStatusFilter .dropdown-item', function() { 
+    
+    console.log('ok')
+    let Val3 = $(this).text();
+  
+     var filter=$('#maritalStatus-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val3))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
+
+     var patientCount = $("#maritalStatus-content .patinet-filter-content-toggle");
+     var badge=$('#badge-maritalStatus').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
+// 5------------OcuupationFn filter------------------------------
 function occupationFnFilter() {
 
     var json = initJSON();
@@ -1795,25 +1888,48 @@ function occupationFnFilter() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
-            var List3 = $('#occupationFilter')
-                    .addClass('multiple-checkboxes')
-                        .attr('multiple','multiple');
+            var List3 = $('#occupationFilter').html('')
+                  
             var occupatio = res.tbl[0].r;
             for (var i = 0; i < occupatio.length; i++) {
-                var p = $('<option>')
+                var p = $('<a>')
+                    .attr('href','#')
+                    .addClass('dropdown-item')
                     .attr('value', occupatio[i].itemKey)
                 .append(occupatio[i].itemValue);
                 List3.append(p);
             }
-            multiSelect()   
+         
         }
     });
-
-
 }
 
+$(document).on("click", '#occupationFilter .dropdown-item', function() { 
+    
+    console.log('ok')
+    let Val4 = $(this).text();
+  
+     var filter=$('#occupation-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val4))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
+
+     var patientCount = $("#occupation-content .patinet-filter-content-toggle");
+     var badge=$('#badge-occu').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
+// 6----------------------------------------
 function bloodGroupFnFilter() {
     var json = initJSON();
    
@@ -1825,52 +1941,49 @@ function bloodGroupFnFilter() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
-            var List = $('#bloodGroupFilter')
-                .addClass('multiple-checkboxes')
-                    .attr('multiple','multiple');
+            var List = $('#bloodGroupFilter').html('')
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
-                var p = $('<option>')
+                var p = $('<a>')
+                        .attr('href','#')
+                    .addClass('dropdown-item')
                         .val(obj[i].itemKey)
                         .text(obj[i].itemValue);
                 List.append(p);
             }
-            multiSelect()  
+          
         }
     });
 
 
 }
 
-// pasientName add filter content
+$(document).on("click", '#bloodGroupFilter .dropdown-item', function() { 
+  
+    let Val5 = $(this).text();
+  
+     var filter=$('#blood-content');
+   
+      var full=($('<div>')
+      .addClass('d-flex justify-content-center align-items-center')
+      .addClass('patinet-filter-content-toggle')
+   .append($('<span>')
+      .append(Val5))
+   .append($('<span>')
+      .addClass('filter-buttons-close')  ))
+   
+      filter.append(full)
 
- $(document).on("click", '#pastient-combo a', function () {  
+     var patientCount = $("#blood-content .patinet-filter-content-toggle");
+     var badge=$('#badge-blood').html('');
+     var badge2=$('<span>').addClass('count-style').append(patientCount.length)
+     badge.append(badge2)
+  
+   });
 
-       let Val = $(this).parent().find('input').val();
-     
-        var filter=$('#fiter-content');
-      
-         var full=($('<div>')
-         .addClass('d-flex justify-content-center align-items-center')
-         .addClass('patinet-filter-content-toggle')
-      .append($('<span>')
-         .append(Val))
-      .append($('<span>')
-         .addClass('filter-buttons-close')  ))
-      
-         filter.append(full)
-
-        var patientCount = $(".patinet-filter-content-toggle");
-        var badge=$('#badge-patient').html('');
-        var badge2=$('<span>').addClass('count-style').append(patientCount.length)
-        badge.append(badge2)
-
-       
-      
-      });
-
+// ======================================================
 
 
 function pasientFilterSection(){
@@ -1887,6 +2000,7 @@ function pasientFilterSection(){
                 .attr('data-toggle', 'collapse')
                 .attr('href','#pasientfilterName')
                 .attr('aria-expanded','false')
+                .attr('onclick','pasientFilter()')
             .addClass('panel-witdh')
             .append('Pasient ID') )
 
@@ -1907,8 +2021,7 @@ function pasientFilterSection(){
                 .attr('id','pasient-filter')
                 .attr('data-toggle','dropdown')
                 .attr('aria-expanded',false)
-                .attr('autocomplete','off')
-                .attr('onclick','pasientFilter()'))
+                .attr('autocomplete','off'))
         .append($('<div>')
                 .attr('id','pastient-combo')
             .addClass('dropdown-menu'))        
@@ -1919,7 +2032,7 @@ function pasientFilterSection(){
       ) 
     )
 )
-// -----------------------------------------
+// --------------Date---------------------------
         .append($('<div>')
         .addClass('panel-default')
     .append($('<div>')
@@ -1950,120 +2063,210 @@ function pasientFilterSection(){
         .addClass('form-control filter-input')
             ))
          )))
- //  -----------------------------------------
+ //  -----------Gender------------------------------
 
          .append($('<div>')
          .addClass('panel-default')
      .append($('<div>')
          .addClass('panel-heading')
+         .addClass('d-flex')
      .append($('<div>')
              .attr('data-toggle', 'collapse')
              .attr('href','#pasientfilterGender')
              .attr('aria-expanded','false')
              .attr('onclick','genderFnFilter()')
-         .append('Cinsiyyət')))
+        .addClass('panel-witdh')
+        .append('Cinsiyyət'))
+
+         .append($('<span>')
+         .attr('id','badge-gender'))
+         )
      .append($('<div>')
              .attr('id','pasientfilterGender')
          .addClass('panel-collapse')
          .addClass('collapse in')
      .append($('<div>')
-         .addClass('panel-body gender-radio-buttons')
-         .append($('<select>')
-         .attr('id','gender-filter')
-         ) 
-         ) ) )
+    .append($('<button>')
+            .attr('data-toggle','dropdown')
+            .attr('aria-haspopup',true)
+            .attr('aria-expanded', false)
+        .addClass('filter-input')
+        .addClass('form-control')
+        
+         .append('Axtar')
+         )
+    .append($('<div>')
+            .attr('id','gender-filter')
+        .addClass('dropdown-menu')
+            ) 
+    .append($('<div>')
+        .addClass('pasient-field')
+           .attr('id','gender-content')
+        .addClass('row m-auto'))
+       )
+    ) )
 
- //  -----------------------------------------
+
+ //  -------------Occupation----------------------------
 
            .append($('<div>')
            .addClass('panel-default')
        .append($('<div>')
            .addClass('panel-heading')
+           .addClass('d-flex')
        .append($('<div>')
                .attr('data-toggle', 'collapse')
-               .attr('href','#pasientfilterOccuOther')
+               .attr('href','#pasientfilterOccu')
                .attr('aria-expanded','false')
                .attr('onclick','occupationFnFilter()')
-           .append('İxtisas')))
+            .addClass('panel-witdh')
+            .append('İxtisas'))
+           
+        .append($('<span>')
+         .attr('id','badge-occu'))
+           )
        .append($('<div>')
-               .attr('id','pasientfilterOccuOther')
+               .attr('id','pasientfilterOccu')
            .addClass('panel-collapse')
            .addClass('collapse in')
        .append($('<div>')
            .addClass('panel-body')
-        .append($('<select>')
+        .append($('<button>')
+                .attr('data-toggle','dropdown')
+                .attr('aria-haspopup',true)
+                .attr('aria-expanded', false)
+            .addClass('filter-input')
+            .addClass('form-control')
+        .append('Axtar'))
+   .append($('<div>')
            .attr('id','occupationFilter')
-           ) 
-           ) ))
- //  -----------------------------------------
+       .addClass('dropdown-menu')  ) 
+    .append($('<div>')
+       .addClass('pasient-field')
+          .attr('id','occupation-content')
+       .addClass('row m-auto'))
+        ) 
+     ))
+ //  -------------MaritalStatus Filter----------------------------
 
-            .append($('<div>')
+        .append($('<div>')
             .addClass('panel-default')
         .append($('<div>')
             .addClass('panel-heading')
+            .addClass('d-flex')
         .append($('<div>')
                 .attr('data-toggle', 'collapse')
                 .attr('href','#pasientfilterFamily')
                 .attr('aria-expanded','false')
+                .addClass('panel-witdh')
                 .attr('onclick','maritalStatusFnFilter()')
-            .append('Ailə vəziyyəti')))
+            .append('Ailə vəziyyəti'))
+        .append($('<span>')
+                .attr('id','badge-maritalStatus'))
+            )
         .append($('<div>')
                 .attr('id','pasientfilterFamily')
             .addClass('panel-collapse')
             .addClass('collapse in')
         .append($('<div>')
             .addClass('panel-body')
-        .append($('<select>')
+   
+        .append($('<button>')
+                .attr('data-toggle','dropdown')
+                .attr('aria-haspopup',true)
+                .attr('aria-expanded', false)
+            .addClass('filter-input')
+            .addClass('form-control')
+           .append('Axtar'))
+        .append($('<div>')
                 .attr('id','maritualStatusFilter')
-                  )
+            .addClass('dropdown-menu') )
+        .append($('<div>')
+            .addClass('pasient-field')
+               .attr('id','maritalStatus-content')
+            .addClass('row m-auto'))
                 )
              ))
-  //  -----------------------------------------
+  //  ------------EduFn Filter-----------------------------
 
-          .append($('<div>')
+    .append($('<div>')
           .addClass('panel-default')
-      .append($('<div>')
+    .append($('<div>')
           .addClass('panel-heading')
-      .append($('<div>')
+          .addClass('d-flex')
+    .append($('<div>')
               .attr('data-toggle', 'collapse')
-              .attr('href','#pasientfilterOccu')
+              .attr('href','#pasientfilterEdu')
               .attr('aria-expanded','false')
               .attr('onclick','educationFnFilter()')
-          .append('Təhis')))
+            .addClass('panel-witdh')
+          .append('Təhsil'))
+    .append($('<span>')
+         .attr('id','badge-edu'))
+          )
       .append($('<div>')
-              .attr('id','pasientfilterOccu')
+              .attr('id','pasientfilterEdu')
           .addClass('panel-collapse')
           .addClass('collapse in')
       .append($('<div>')
           .addClass('panel-body')
-          .append($('<select>')
-            .attr('id','eduFilter')         
-          )
+
+    .append($('<button>')
+        .addClass('form-control')
+            .attr('data-toggle','dropdown')
+            .attr('aria-haspopup',true)
+            .attr('aria-expanded', false)
+         .addClass('filter-input')
+         .addClass('form-control')
+        .append('Axtar'))
+    .append($('<div>')
+                .attr('id','eduFilter')
+            .addClass('dropdown-menu'))
+    .append($('<div>')
+        .addClass('pasient-field')
+            .attr('id','edu-content')
+        .addClass('row m-auto'))
           )
           
     ))
    
- //  -----------------------------------------
+ //  --------------BloodGroup Filter---------------------------
         
-        .append($('<div>')
+    .append($('<div>')
             .addClass('panel-default')
-        .append($('<div>')
+    .append($('<div>')
             .addClass('panel-heading')
-        .append($('<div>')
+            .addClass('d-flex')
+    .append($('<div>')
                   .attr('data-toggle', 'collapse')
                   .attr('href','#pasientfilterBlood')
                   .attr('aria-expanded','false')
                   .attr('onclick','bloodGroupFnFilter()')
-              .append('Qan qrupu')))
-          .append($('<div>')
+            .addClass('panel-witdh')
+              .append('Qan qrupu'))
+            .append($('<span>')
+              .attr('id','badge-blood'))  
+            )
+     .append($('<div>')
                   .attr('id','pasientfilterBlood')
               .addClass('panel-collapse')
               .addClass('collapse in')
-          .append($('<div>')
+    .append($('<div>')
               .addClass('panel-body')
-           .append($('<select>')
-           )
-           .attr('id','bloodGroupFilter')         
+    .append($('<button>')
+              .attr('data-toggle','dropdown')
+              .attr('aria-haspopup',true)
+              .attr('aria-expanded', false)
+            .addClass('filter-input')
+            .addClass('form-control')
+         .append('Axtar'))
+    .append($('<div>')
+              .attr('id','bloodGroupFilter')
+          .addClass('dropdown-menu'))
+    .append($('<div>')
+          .addClass('pasient-field')
+              .attr('id','blood-content')
+          .addClass('row m-auto'))
               )
                ))
 

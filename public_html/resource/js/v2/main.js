@@ -150,13 +150,7 @@
 })(jQuery);
 
 // ===============FILTER FUNCTION=======================
-// Multi select function   
-function multiSelect(){
-  $('.multiple-checkboxes').multiselect({
-      includeSelectAllOption: true,
-    });
-    
-}
+
 
 function FilterSectionToggle() {
   pasientFilterSection()

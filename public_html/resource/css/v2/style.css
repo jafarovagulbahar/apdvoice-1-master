@@ -74,14 +74,12 @@ ul{
 .multiselect-container>li>a>label{
     padding: 7px 20px 7px 14px;
 }
-.multiselect-container.dropdown-menu{
-    max-height: 200px;
-    overflow: auto;
+#pasientFilterAccordion .dropdown-menu{
+   height: 220px !important;
+   overflow: auto;
 }
-.multiselect{
-    width: 145px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#pasientFilterAccordion .form-control{
+    line-height: 1;
 }
 /*--------------------------------------------------------------
 # Back to top button
@@ -1347,7 +1345,7 @@ table .total td {
     transition: all 0.5s ease;
 }
 
-.pasient-field div{
+.pasient-field .patinet-filter-content-toggle{
 background-color: #f7f5f3;
 border-radius: 30px;
 margin: 5px;
@@ -1355,20 +1353,12 @@ padding: 5px 10px;
 width: auto;
 
 }
-.pasient-field div:hover{
+.pasient-field .patinet-filter-content-toggle:hover{
     background-color: #edebe8;
 }
 .patinet-filter-content-toggle.open{
   display: none !important;
 }
-/* Gender */
-.gender-radio-buttons{
-    display: inline-grid;
-}
-
-
-
-
 
 
 
