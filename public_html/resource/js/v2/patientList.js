@@ -2040,6 +2040,7 @@ function pasientFilterSection(){
             .attr('id','eduFilter')         
           )
           )
+          
     ))
    
  //  -----------------------------------------
