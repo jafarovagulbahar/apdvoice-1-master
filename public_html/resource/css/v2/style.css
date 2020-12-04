@@ -70,6 +70,7 @@ ul{
     font-size: inherit;
   }
 
+
 /* ===============MULTI SELECT========== */
 .multiselect-container>li>a>label{
     padding: 7px 20px 7px 14px;
@@ -433,13 +434,14 @@ padding: 60px 0;
 # patient List
 --------------------------------------------------------------*/
 .patientList .content {
-    padding: 30px;
+    padding: 15px 25px;
     background: #ffffff;
     border-radius: 4px;
     color: #fff;
 }
 #example_wrapper{
     color: #000000;
+  
 }
 
 
@@ -1105,7 +1107,9 @@ label {
 .pasientLabel{
     display: flex;
 }
-
+.visib{
+    visibility: collapse;
+}
 /* -----------------PASİENT TABLE PAGE--------------- */
 .pasientTableSection{
     padding-top: 180px;
@@ -1114,6 +1118,18 @@ label {
 .constHeader{
     margin-right: 0px;
     margin-left: 0px;
+}
+.word-export-patient-table, .print-export{
+    background-color: #ffffff;
+    box-shadow: 0px 1px 5px #aba8d4;
+    border-radius: 10px;
+    padding: 3px 12px;
+    border: none;
+    outline: none;
+}
+.word-export-patient-table.active, 
+.print-export.active{
+    border: none;
 }
 .word-export{
     background-color: #ffffff;
@@ -1147,9 +1163,7 @@ table td {
 table th {
     background-color:#d3dde6;
 }
-table tr:nth-of-type(even) td {
-    background-color: #fcfbff;
-}
+
 table .total th {
     background-color: white;
 }
@@ -1163,12 +1177,12 @@ table .total td {
 .openTable{
    display: inline-block !important;
 }
+.tableRes{
+    display: none !important;
+}
 
 .content-body-class{
     position: relative;
-}
-.table-section{
-    position: absolute;
 }
 
 /*============ Table Filer section============ */
@@ -1247,6 +1261,18 @@ table .total td {
 }
 
 /* ============ACCORDIAN FILTER=============== */
+.panel-default .dropdown-item.active{
+margin-top: 1px;
+position: relative;
+background-color:transparent;
+color: #000000;
+
+}
+.panel-default .dropdown-item.active:before{
+    position: absolute;
+    content: '\2714';
+    margin-left: -15px;
+}
 /* FILTER COUNT */
 .count-style{
     background: #ebebee;
@@ -1359,92 +1385,18 @@ width: auto;
 .patinet-filter-content-toggle.open{
   display: none !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-/* ______________________-RESPONSIVE___________________________ */
-@media (min-width: 760px) and (max-width: 1024px) {
-    .content-body-class{
-        overflow-x: scroll;
-        width: 768px;
-    }
+.table-section .table-bordered td{
+    border-right:1px solid #dee2e6;
+    border-left:1px solid #dee2e6;
+    border-top: none;
+    border-bottom: none;
 }
-
-@media only screen and (max-width: 760px) {
-   
-    table tr td:not(:first-child), table tr th:not(:first-child){
-        display: none;
-   }
-    table tr:nth-of-type(even) td:first-child {
-        background-color: #fcfbff;
-   }
-    table tr:nth-of-type(odd) td:first-child {
-        background-color: white;
-   }
-    table tr:nth-of-type(even) td:not(:first-child) {
-        background-color: white;
-   }
-    table tr th:first-child {
-        width: 100%;
-        display: block;
-   }
-    table tr th:not(:first-child) {
-        width: 40%;
-        transition: transform 0.4s ease-out;
-        position: relative;
-      
-   }
-    table tr td:not(:first-child) {
-        transition: transform 0.4s ease-out;
-        width: 60%;
-        position: relative;
-      
-   }
-    table tr td:first-child {
-        display: block;
-        cursor: pointer;
-   }
-   .apd-table-td:nth-child(1){
-       position: relative;
-   }
-   .apd-table-td:nth-child(1):before,
-   .apd-table-td:nth-child(1):after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 15px;
-    width: 20px;
-    height: 2px;
-    background: #0563bb;
+.table-section table tr td{
+    word-break: break-all;
 }
-.apd-table-td:nth-child(1):after{
-    transform: rotate(-90deg);
-    transition: all 0.5s ease;
+.table-section tr td:first-child{
+    cursor: pointer;
 }
-
-.apd-table-td:nth-child(1).active:after{
-    transform: rotate(0deg);
-}
+/* ============================ */
 
 
- 
-}
-@media only screen and (max-width: 300px) {
-    table tr th:not(:first-child) {
-        width: 50%;
-        font-size: 14px;
-   }
-    table tr td:not(:first-child) {
-        width: 50%;
-        font-size: 14px;
-   }
-}

@@ -78,7 +78,8 @@
       class: 'mobile-nav d-lg-none'
     });
     $('body').append($mobile_nav);
-    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="fa fa-bars"></i></button>');
+    $('body')
+      .prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="fa fa-bars"></i></button>');
  
     $(document).on('click', '.mobile-nav-toggle', function(e) {
       $('body').toggleClass('mobile-nav-active');
@@ -98,15 +99,16 @@
       $(this).parent().toggleClass('active');
     });
 
-//    $(document).click(function(e) {
-//      var container = $(".mobile-nav, .mobile-nav-toggle, .dropMenu");
-//      if (!container.is(e.target) && container.has(e.target).length === 0) {
-//        if ($('body').hasClass('mobile-nav-active')) {
-//          $('body').removeClass('mobile-nav-active');
-//        }
-//      }
-//    });
-    
+    $(document).click(function(e) {
+      var container = $(".mobile-nav, .mobile-nav-toggle, .dropMenu");
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        if ($('body').hasClass('mobile-nav-active')) {
+          $('body').removeClass('mobile-nav-active');
+      
+
+        }
+      }
+    });
   } else if ($(".mobile-nav, .mobile-nav-toggle").length) {
     $(".mobile-nav, .mobile-nav-toggle").hide();
   }
@@ -145,16 +147,12 @@
 
  
 
-
-  
 })(jQuery);
 
 // ===============FILTER FUNCTION=======================
 
 
 function FilterSectionToggle() {
-  pasientFilterSection()
-
   $('#filter-content').addClass('open')
 }
 
@@ -163,3 +161,31 @@ function FilterSectionToggleClose() {
 
 }
 
+$(document).one( "click","#filter-btn", function() {
+  pasientFilterSection()
+});
+// -------------FILET MAIN ITEMS ONE CLICK------------------------
+$(document).one( "click","#genderOneClick", function() {
+  genderFnFilter()
+});
+
+
+$(document).one( "click", "#pasientOneClick", function() {
+  pasientFilter()
+});
+
+$(document).one( "click","#occuOneClick", function() {
+  occupationFnFilter()
+});
+
+$(document).one( "click","#maritualOneClick", function() {
+  maritalStatusFnFilter()
+});
+
+$(document).one( "click","#eduOneClick", function() {
+  educationFnFilter()
+});
+
+$(document).one( "click","#bloodOneClick", function() {
+  bloodGroupFnFilter()
+});
