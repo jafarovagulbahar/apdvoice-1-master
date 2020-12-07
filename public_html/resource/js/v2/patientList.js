@@ -45,8 +45,7 @@ function convertTimeSeconds(date) {
 function appointmentListTableGen() {
 
     $('#appointmentListTable').DataTable({
-        "initComplete": function( settings, json ) {
-            $('div.loading').remove()},
+      
         "destroy": true,
         "dom": 'Bfrltip',
         responsive: true,
@@ -126,6 +125,7 @@ function appointmentListTableGen() {
 // Pasient Data Table
 function patientListTableGen() {  
     $('#patientListTable').DataTable({
+        "destroy": true,
         "dom": 'Bfrltip',
         responsive: true,
         "paging": true,
