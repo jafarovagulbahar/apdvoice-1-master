@@ -123,4 +123,12 @@
     }
 }
 
+@media print{
+ *{
+      font-size: 12px;
+    }
+   
+  
+    
+    }
 

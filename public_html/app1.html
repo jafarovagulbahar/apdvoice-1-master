@@ -169,7 +169,7 @@
 
                     <div class="content-body-appointmentlist content-body-class" >
                         <div id="geeks"></div>
-                        <table id="appointmentListTable" class="table table-striped table-bordered" cellspacing="0" width="100%" style="color:black"> 
+                        <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black"> 
 
                             <thead id="DoctorDataTableHeader"> </thead>
                             <tbody id="DoctorDataTable">  </tbody>
@@ -183,7 +183,8 @@
                        
                         </div> 
                        </div>
-                        <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0" width="100%" style="color:black"> 
+                     
+                        <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black"> 
                             <thead id="PasinetTableThead"> </thead>
                             <tbody id="PasinetTableBody">  </tbody>
                         </table>
@@ -721,6 +722,7 @@
         //        });
       
         GetAppointmentList();
+        
 
         jQuery(document).ready(function ($) {
             $(".word-export").click(function (event) {

@@ -17,6 +17,11 @@ function menuPatientListLoad() {
     $('.content-body-patientlist').show();
     $('.hide-content-pasient').show()
     GetPatientList();
+
+
+    
+    
+    
     
 }
 //    -----------------------------------------------------------------------------------------------------------------------------
@@ -38,7 +43,10 @@ function convertTimeSeconds(date) {
 // dataTable
 
 function appointmentListTableGen() {
-    $('#appointmentListTable', ).DataTable({
+
+    $('#appointmentListTable').DataTable({
+        "initComplete": function( settings, json ) {
+            $('div.loading').remove()},
         "destroy": true,
         "dom": 'Bfrltip',
         responsive: true,
@@ -105,18 +113,20 @@ function appointmentListTableGen() {
                 next: '<i class="fa fa-angle-double-right">',
                 previous: '<i class="fa fa-angle-double-left">'
             }
-        }
+        },
+        
 
 
     });
+    
 
 }
 
+
 // Pasient Data Table
-function patientListTableGen() {
-    $('#patientListTable', ).DataTable({
+function patientListTableGen() {  
+    $('#patientListTable').DataTable({
         "dom": 'Bfrltip',
-        "destroy": true,
         responsive: true,
         "paging": true,
         "autoWidth": true,
@@ -182,9 +192,14 @@ function patientListTableGen() {
 
 
     });
+
+    
+
+
 }
 
 
+  
 
 // Next Prev Modal Fn
 function nextPrev() {
@@ -370,6 +385,7 @@ function getpatientList(e) {
         async: false,
         success: function (res) {
             pasientListCombo(res)
+         
             $("#patientId").val('');
             $("#param1").val('');
             $("#param2").val('');
@@ -1285,6 +1301,7 @@ function GetPatientList(e) {
         success: function (res) {
             PasientDataTable(res);
             patientListTableGen();
+
         },
         error: function (res, status) {
             //  lert(getMessage('somethingww'));
@@ -1317,7 +1334,11 @@ function PasientDataTable(res) {
     var table = $('#PasinetTableBody');
     table.empty();
 
+
+    if(res.tbl[0]!== undefined){
+
     var obj = res.tbl[0].r;
+    
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
         var t = ($('<tr>')
@@ -1350,6 +1371,7 @@ function PasientDataTable(res) {
 
     }
 }
+}
 
 
 
@@ -1379,6 +1401,7 @@ function generalPatientFn(id) {
         async: true,
         success: function (res) {
             addNewSessiaArea()
+            
         }
     });
 
@@ -1656,13 +1679,13 @@ var objFilter={
     gender: [],
     edu: [],
     maritual: [],
-    occupation: [],
-    blood: []
+    occu: [],
+    bloodGroup: []
 }
 
 function pasientFnItemClick(id, e11){
 
-    
+
     if($('#pasient'+ id).hasClass('active') && id==id){ 
 
         $('#spanPas'+id).remove()  
@@ -1675,6 +1698,7 @@ function pasientFnItemClick(id, e11){
     objFilter.pasient[id]=text1;
 
     getFilter(objFilter)
+  
 
      var filter=$('#fiter-content');
    
@@ -1696,6 +1720,8 @@ function pasientFnItemClick(id, e11){
      var badge=$('#badge-patient').html('');
      var badge2=$('<span>').addClass('count-style').attr('id','pasient-count').append(Number(patientCount.length))
      badge.append(badge2)
+
+     
 }
 
 function pasientItem(id, e11){
@@ -1733,6 +1759,8 @@ function pasientComboFilter(res) {
             .attr('value', obj[i].patientName)))
         patientList.append(p);
     }
+
+    
 }
 // 2 .------------GenderFn filter-----------------------------------
 // =================================================================
@@ -1808,6 +1836,9 @@ function genderFnItemClick(id){
 }
 
 function genderItem(id){
+    delete objFilter.gender[id];
+    getFilter(objFilter)
+
     $('#spanGen'+id).remove()
     $('#g'+ id).removeClass('active'); 
 
@@ -1887,6 +1918,10 @@ function eduFnItemClick(id){
 }
 
    function eduItem(id){
+
+    delete objFilter.edu[id];
+    getFilter(objFilter)
+
     $('#spanEdu'+id).remove()
     $('#edu'+ id).removeClass('active'); 
 
@@ -1964,6 +1999,9 @@ function maritualFnItemClick(id){
 }
 
    function marItem(id){
+    delete objFilter.maritual[id];
+    getFilter(objFilter)
+
     $('#spanMar'+id).remove()
     $('#marturial'+ id).removeClass('active'); 
 
@@ -2018,7 +2056,7 @@ function occuFnItemClick(id){
     let text4 =$('#occu'+ id).text();  
 
     
-    objFilter.occupation[id]=text4;
+    objFilter.occu[id]=text4;
 
     getFilter(objFilter)
 
@@ -2045,6 +2083,9 @@ function occuFnItemClick(id){
 }
 
    function occuItem(id){
+    delete objFilter.occu[id];
+    getFilter(objFilter)
+
     $('#spanOccu'+id).remove()
     $('#occu'+ id).removeClass('active'); 
     var a=Number($('#badge-occu span').text())-1;
@@ -2070,6 +2111,7 @@ function bloodGroupFnFilter() {
         crossDomain: true,
         async: true,
         success: function (res) {
+            
             var List = $('#bloodGroupFilter').html('')
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
@@ -2089,6 +2131,7 @@ function bloodGroupFnFilter() {
 
 }
 function bloodFnItemClick(id){
+    
     if($('#blood'+ id).hasClass('active') && id==id){ 
 
         $('#spanBlood'+id).remove()  
@@ -2098,7 +2141,7 @@ function bloodFnItemClick(id){
 
     let text5 =$('#blood'+ id).text(); 
 
-    objFilter.blood[id]=text5;
+    objFilter.bloodGroup[id]=text5;
 
     getFilter(objFilter)
 
@@ -2125,6 +2168,9 @@ function bloodFnItemClick(id){
 }
 
    function bloodItem(id){
+    delete objFilter.bloodGroup[id];
+    getFilter(objFilter)
+
     $('#spanBlood'+id).remove()
     $('#blood'+ id).removeClass('active'); 
 
@@ -2136,6 +2182,15 @@ function bloodFnItemClick(id){
          $('#badge-blood').hide()
        }
 }
+
+$(document).on('change', '.dateOne', function(){
+    let date1=$('#date1').val().replaceAll('-',''); 
+    let date2=$('#date2').val().replaceAll('-',''); 
+    let date=date1+'%IN%'+date2;
+    objFilter.date=date;
+    getFilter(objFilter);
+})
+
 // ================================================================
 // =================================================================
 
@@ -2207,6 +2262,8 @@ function pasientFilterSection(){
     .addClass('col-12 mt-1 mb-1')
     .append($('<input>')
             .attr('type','date')
+            .addClass('dateOne')
+            .attr("id","date1")
         .addClass('form-control')
             ))
 
@@ -2214,6 +2271,8 @@ function pasientFilterSection(){
      .addClass('col-12 mt-1 mb-1')
     .append($('<input>')
             .attr('type','date')
+            .addClass('dateOne')
+            .attr("id","date2")
         .addClass('form-control')
             ))
          )))
@@ -2396,32 +2455,77 @@ function pasientFilterSection(){
 
 
 function getFilter(objFilter){
-    
-    
-    console.log(objFilter);
+  
+    var json = {kv: {}};
 
-    // var allData=objFilter.pasient[0]+'%N%'+objFilter.pasient[1];
-    
-    
-    // var json = initJSON();
+    try {
+        console.log(getToken())
+        json.kv.cookie = getToken();
 
-    // var data = JSON.stringify(json);
-    // $.ajax({
-    //     url: urlGl + "api/post/srv/serviceCrGetAppointmentList",
-    //     type: "POST",
-    //     data: data,
-    //     contentType: "application/json",
-    //     crossDomain: true,
-    //     async: false,
-    //     success: function (res) {
-    //         doctorDataTable(res);
-    //         appointmentListTableGen();
-    //         $('.hide-content-pasient').hide()
-           
-    //     },
-    //     error: function (res, status) {
-    //         lert(getMessage('somethingww'));
-    //     }
-    // });
+    } catch (err) {
+
+    }
+  
+    var concatPatient="";
+    var concatGender="";
+    var concatEdu="";
+    var concatMaritual="";
+    var concatOccu="";
+    var concatBlood=""; 
+
+    
+
+    for (var key in objFilter.pasient) {
+        concatPatient+=key+'%IN%';
+    }
+
+    for (var key in objFilter.gender) {
+        concatGender+=key+'%IN%';
+     }
+
+     for (var key in objFilter.edu) {
+        concatEdu+=key+'%IN%';
+    }
+    for (var key in objFilter.maritual) {
+        concatMaritual+=key+'%IN%';
+    }
+    for (var key in objFilter.occu) {
+        concatOccu+=key+'%IN%';
+    }
+    for (var key in objFilter.bloodGroup) {
+        concatBlood+=key+'%IN%';
+    }
+ 
+
+     json.kv.fkPatientId=concatPatient;
+     json.kv.sex=concatGender;
+     json.kv.education=concatEdu;
+     json.kv.maritualStatus=concatMaritual;
+     json.kv.occupation=concatOccu;
+     json.kv.bloodGroup=concatBlood;
+
+     json.kv.insertDate=objFilter.date;
+   
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetPatientList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#patientListTable').DataTable().destroy();  
+            PasientDataTable(res)                    
+            patientListTableGen();
+        
+            },
+        error: function (res, status) {
+            lert(getMessage('somethingww'));
+        }
+    });
+
+    
 
 }

@@ -154,6 +154,7 @@
 
 function FilterSectionToggle() {
   $('#filter-content').addClass('open')
+  
 }
 
 function FilterSectionToggleClose() {
@@ -163,15 +164,19 @@ function FilterSectionToggleClose() {
 
 $(document).one( "click","#filter-btn", function() {
   pasientFilterSection()
+
+  
 });
 // -------------FILET MAIN ITEMS ONE CLICK------------------------
 $(document).one( "click","#genderOneClick", function() {
   genderFnFilter()
+  
 });
 
 
 $(document).one( "click", "#pasientOneClick", function() {
   pasientFilter()
+  
 });
 
 $(document).one( "click","#occuOneClick", function() {
