@@ -36,7 +36,7 @@
         display:block;
         font-size: 12px;
     }.nav-menu2 a {
-        padding: 0px 10px;
+        padding: 0px 12px;
         height: 35px;
         width: 35px;
     }
@@ -73,27 +73,27 @@
     .modal-dialog{
         margin: 13.75rem auto;
     }
-    .dataTables_filter > label > input:focus {
+    /* .dataTables_filter > label > input:focus {
         width: 50px !important;
-    }
+    } */
     .dt-button{
-        padding: 4px;
-        font-size: 10px ! important;
+        padding: 4px 10px;
+        font-size: 12px ! important;
     }.dt-button i{
-        font-size: 10px !important;
+        font-size: 12px !important;
     }.dataTables_length{
-        font-size: 10px !important;
+        font-size: 12px !important;
     }.dataTables_length option{
         font-size: 10px;
     }
     .dataTables_filter{
-        font-size: 10px !important
+        font-size: 12px !important
 
     }.dataTables_info{
-        font-size: 10px;
+        font-size: 12px;
     }
     .copyright{
-        font-size: 10px;
+        font-size: 12px;
     }#example{
         font-size: 12px;
     }
@@ -123,12 +123,15 @@
     }
 }
 
-@media print{
- *{
-      font-size: 12px;
-    }
-   
-  
-    
-    }
 
+@media print{
+    .compact{
+      font-size: 10px !important;
+    }
+    .compact th{
+        font-size: 10px !important;
+    }table.dataTable.dtr-inline.collapsed tbody td:first-child:before{
+        display: none;
+    }
+    
+}

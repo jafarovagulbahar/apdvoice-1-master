@@ -91,7 +91,10 @@
       $('body').removeClass('mobile-nav-active');
            
     });
-
+    $(document).on('click', '.drop-down', function(e) {
+      $('body').removeClass('mobile-nav-active');
+           
+    });
 
     $(document).on('click', '.mobile-nav .drop-down > a', function(e) {
       e.preventDefault();
@@ -194,3 +197,4 @@ $(document).one( "click","#eduOneClick", function() {
 $(document).one( "click","#bloodOneClick", function() {
   bloodGroupFnFilter()
 });
+

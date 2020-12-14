@@ -1,30 +1,29 @@
+
+
 // LOAD
 
 
 
 
 function menuAppointmentListLoad() {
-    $('.content-body-class').hide();
-    $('.content-body-appointmentlist').show();
-   
-    GetAppointmentList();
+    $('.content-body-appointmentlist').show();   
+    $('.content-body-patientlist').hide();
+    GetAppointmentList(1, 10);
    
 }
 
 
 function menuPatientListLoad() {
-    $('.content-body-class').hide();
     $('.content-body-patientlist').show();
+    $('.content-body-appointmentlist').hide();  
     $('.hide-content-pasient').show()
-    GetPatientList();
-
-
     
-    
-    
+    GetPatientList(1, 10);
+ 
+  
     
 }
-//    -----------------------------------------------------------------------------------------------------------------------------
+//    ----------------------------------------------------------
 // ConvertDate
 function convertDate(date) {
     date = date.substring(0, 4) + '-' + date.substring(4, 6) + '-' + date.substring(6, 8);
@@ -40,93 +39,51 @@ function convertTimeSeconds(date) {
     return date;
 }
 
-// dataTable
 
-function appointmentListTableGen() {
 
-    $('#appointmentListTable').DataTable({
-       "destroy": true,
-        "dom": 'Bfrltip',
-        responsive: true,
-        "paging": true,
-        "autoWidth": true,
-        "buttons": [
-            {
-                extend: 'colvis',
-                text: function (dt, button, config) {
-                    return dt.i18n('buttons.colvis', 'Column');
-                }
-            },
+//2th table.  PasientList DataTable
+var pageRowCount=10;
 
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: "thead th:not(.noExport)",
+$(document).on('change', '#patientListTable_length select', function(){
+    pageRowCount=$(this).val()
+    $('#patientListTable').DataTable().clear().destroy();
+    $('#PasinetTableThead').empty();
+    $('#PasinetTableBody').empty();    
+    GetPatientList(1, pageRowCount);
+  
+ });
 
-                }
-            },
-            {
-
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: "thead th:not(.noExport)",
-                    pageSize: 'A4'
-
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                pageSize: 'LEGAL',
-                pageSize: 'A4',
-                exportOptions: {
-                    columns: "thead th:not(.noExport)",
-
-                }
-
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: "thead th:not(.noExport)",
-                    pageSize: 'A4',
-
-                }
-            },
-        ],
-
-        initComplete: function () {
-            $('.buttons-copy').html('<i class="fa fa-copy" />')
-
-            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
-            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
-            $('.buttons-print').html('<i class="fa fa-print" />')
-
-        },
-        "language": {
-            "lengthMenu": " _MENU_ ",
-            "search": "",
-
-            paginate: {
-                next: '<i class="fa fa-angle-double-right">',
-                previous: '<i class="fa fa-angle-double-left">'
-            }
-        },
-        
-    });
+ var pageNumber=1;
+$(document).on("page",'#pagination-pasient', function (event, num) {
+    $('#patientListTable').DataTable().clear().destroy();
+    $('#PasinetTableThead').empty();
+    $('#PasinetTableBody').empty(); 
     
+    if($('#patientSearch').val()===''){
+        GetPatientList(num, pageRowCount)
+    }else{
+        pageNumber=num;
+    }
+  
+})
 
-}
+function patientListTableGen(currentPage, rowCount, pageRowCount) {  
 
-
-// Pasient Data Table
-function patientListTableGen() {  
-    $('#patientListTable').DataTable({
-        "destroy": true,
-        "dom": 'Bfrltip',
+    $('#pagination-pasient').bootpag({
+        total: Math.ceil(rowCount/pageRowCount),          
+        page: currentPage,        
+        maxVisible: 5,     
+        leaps: true,
+    })
+   $('#patientListTable').DataTable({
+       
+        destroy: true,
+        "dom": 'Bfrl',
+        "pageLength": pageRowCount,    
         responsive: true,
         "paging": true,
         "autoWidth": true,
+        "searching":false,
         "buttons": [
             {
                 extend: 'colvis',
@@ -157,16 +114,31 @@ function patientListTableGen() {
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
                     pageSize: 'A4',
+                   
 
                 }
             },
             {
                 extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '12px' )
+
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                    
+                },
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
-                    pageSize: 'A4',
+                    // pageSize: 'A4',
+                  
+                    modifier: {
+                        page: 'current'
+                    }
 
                 }
+               
             },
         ],
 
@@ -190,9 +162,6 @@ function patientListTableGen() {
 
     });
 
-    
-
-
 }
 
 
@@ -207,13 +176,17 @@ function nextPrev() {
         //click next
         currentModal.find('.btn-next').click(function () {
             currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']").nextAll("div[id^='popup1']").first().modal('show');
+            currentModal.closest("div[id^='popup1']")
+                .nextAll("div[id^='popup1']")
+                .first().modal('show');
         });
 
         //click prev
         currentModal.find('.btn-prev').click(function () {
             currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']").prevAll("div[id^='popup1']").first().modal('show');
+            currentModal.closest("div[id^='popup1']")
+                .prevAll("div[id^='popup1']")
+                .first().modal('show');
         });
     });
 }
@@ -221,13 +194,24 @@ function nextPrev() {
 
 // patient selectbox value append
 $(document).on("click", '#patinetlistcombo a', function (e) {
-    ulVal = $(this).parent().find('input').val();
+  var  ulVal = $(this).parent().find('input').val();
     //PasientName search inputuna elave olunur
     document.getElementById('pasientInput').value = ulVal;
-    //PasientName Newsession area-ya elave olunur
-    document.getElementById('patientSessiaId').value = ulVal;
+ 
 
 });
+
+$(document).on("click", '#sessiaBtn', function (e) {
+  var  valSessia = $('#pasientInput').val();
+  if(valSessia===''){
+    // console.log('pasient daxil et')
+  }else{
+    document.getElementById('patientSessiaId').value = valSessia;
+  }
+ 
+
+});
+
 
 //patient list search
 $(document).on("keyup", '#pasientInput', function (e) {
@@ -280,8 +264,10 @@ $(document).on("click", '.add-patinet-btn', function () {
 
 //  AJAX CODING
 
+
 //1. start ADD NEW PASIENT-------------------------------------------------
-function patientList(e) {
+function patientList() {
+
     var patientId = $("#patientName").val();
 
     var json = initJSON();
@@ -319,13 +305,22 @@ function patientList(e) {
         async: false,
         success: function (res) {
             Utility.AJAXCallFeedback(res, 'patientName');
+            
             if ($('#closeAfterInsert4Pasient').is(":checked")) {
                 $('#pasientAddModal').modal('hide');
             } else {
                 AddNewPasientArea();
                 $('#closeAfterInsert4Pasient').prop("checked", false);
             }
-            getpatientList();
+      
+                 
+             $('#patientListTable').DataTable().destroy();                 
+             
+             GetPatientList(1, 10);
+             
+       
+          
+
         },
         error: function (res, status) {
             //  lert(getMessage('somethingww'));
@@ -337,9 +332,17 @@ function pasientListCombo(res) {
 
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
-        var p = $('<span>').append($('<a>').attr('href', '#').addClass('patient_li dropdown-item').attr('data-value', obj[i].patientName)
-                .append(obj[i].patientName).attr('id', 'patentID' + obj[i].id).attr('onclick', 'generalPatientFn("' + obj[i].id + '")')
-                .append($('<input>').attr('type', 'hidden').attr('value', obj[i].patientName)))
+        var p = $('<span>')
+        .append($('<a>')
+                .attr('href', '#')
+            .addClass('patient_li dropdown-item')
+                .attr('data-value', obj[i].patientName)
+            .append(obj[i].patientName)
+                .attr('id', 'patentID' + obj[i].id)
+                .attr('onclick', 'generalPatientFn("' + obj[i].id + '")')
+        .append($('<input>')
+                .attr('type', 'hidden')
+                .attr('value', obj[i].patientName)))
 
         patientList.append(p);
     }
@@ -347,7 +350,7 @@ function pasientListCombo(res) {
 }
 
 
-function getpatientList(e) {
+function getpatientList(e) { //deyesen lazimsiz funksiyadir
     var json = {kv: {}};
 
     try {
@@ -412,7 +415,7 @@ function pasientFilter() {
     } catch (err) {
 
     }
-    json.kv.patientName = $("#patientId").val();
+    json.kv.patientName = $("#patientName").val();
 
     var data = JSON.stringify(json);
     $.ajax({
@@ -434,109 +437,11 @@ function pasientFilter() {
 }
 // end ADD NEW PASIENT----------------------------------------------
 
-//2. start MAIN TABLE-------------------------------------------------
-function GetAppointmentList(e) {
-
-    var json = initJSON();
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGetAppointmentList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            doctorDataTable(res);
-            appointmentListTableGen();
-            $('.hide-content-pasient').hide()
-           
-        },
-        error: function (res, status) {
-            lert(getMessage('somethingww'));
-        }
-    });
-}
-
-
-function doctorDataTable(res) {
-    var thead = $('#DoctorDataTableHeader')
-    thead.html('');
-
-    var p = $('<tr>')
-            .append($('<th>').append('№'))
-            .append($('<th>').addClass('noExport').append('Suallar'))
-            .append($('<th>').append('Status'))
-            .append($('<th>').append('Təyinat'))
-            .append($('<th>').append('Tarix&nbsp;&nbsp;&nbsp;&nbsp;'))
-            .append($('<th>').append('Saat(dan)'))
-            .append($('<th>').append('Saat(a)'))
-            .append($('<th>').append('Status'))
-            .append($('<th>').append('Patient ID'))
-            .append($('<th>').append('Həkim'))
-            .append($('<th>').append('Izahat'))
-            .append($('<th>').append('Cinsiyyət'))
-            .append($('<th>').append('Modul adı'))
-            .append($('<th>').addClass('noExport').append('Delete'))
-
-    thead.append(p);
-
-
-    var table = $('#DoctorDataTable');
-    table.html('');
-    var obj = res.tbl[0].r;
-    for (var i = 0; i < obj.length; i++) {
-        var o = obj[i];
-        var t = ($('<tr>')
-                .append($('<td>')
-                     .addClass('apd-table-td')
-                    .append(i + 1))
-
-                .append($('<td>')
-                    .addClass('apd-table-td')
-                .append($('<a>')
-                    .addClass('question-icon dropdown-toggle')
-                         .attr('onclick', 'questioFnArea("' + obj[i].id + '")')
-                         .attr('href', '#').attr('data-toggle', 'dropdown')
-                         .attr('aria-haspopup', 'true')
-                         .attr('aria-expanded', 'false')
-                .append($('<i>')
-                    .addClass('fa fa-question')))
-                        .append($('<div>')
-                        .addClass('dropdown-menu dropMenuQues')
-                            .attr('id', 'dropMenuQues' + obj[i].id)
-                            .attr('aria-labelledby', 'apdQuestions' + obj[i].id)
-                                ) )
-
-                .append($('<td>').addClass('_0c').append(o.status))
-                .append($('<td>').addClass('_1c').append(o.purpose))
-                .append($('<td>').addClass('_2c').append(convertDate(o.insertDate)))
-                .append($('<td>').addClass('_3c').append(convertTimeSeconds(o.appointmentTime1)))
-                .append($('<td>').addClass('_4c').append(convertTimeSeconds(o.appointmentTime2)))
-                .append($('<td>').addClass('_5c').append(o.appointmentStatusName))
-                .append($('<td>').addClass('_6c').append(o.patientName))
-                .append($('<td>').addClass('_7c').append(o.doctorFullname))
-                .append($('<td>').addClass('_8c').append(o.description))
-                .append($('<td>').addClass('_9c').append(o.sexName))
-                .append($('<td>').addClass('_10c').append(o.moduleName))
-                .append($('<td>').addClass('_11c').append($('<i>').addClass('fa fa-trash trash-icon')))
-
-                )
-
-        table.append(t);
-
-    }
-}
-
-// end MAIN TABLE-----------------------------------------------
-
 
 //3. start NEW SESSIA----------------------------------------------
 
 function addNewSessiaArea() {
 
-    console.log(GetNewSessiaDoctor());
     var doctor = GetNewSessiaDoctor().tbl[0].r;
     var purposes = GetNewSessiaPurpose().tbl[0].r;
 //    var testPasent=testPasient().tbl[0].r[0];
@@ -549,42 +454,94 @@ function addNewSessiaArea() {
             .append($('<label>')
                 .append('Həkim'))
              .append($('<select>')
+                .addClass('noSearch selectStyle form-control')
+                .attr('id', 'doctor')  ))
+  // ---------------------------------------
+
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-4')
+            .append($('<label>')
+                .append('Patient'))
+           .append($('<input>')
+                .addClass('form-control apd-form-input')
+                    .attr('id', 'patientSessiaId')
+                    .attr('type', 'text')
+                    .prop('disabled', true)))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-4 patientSelectBox')
+            .append($('<label>')
+                .append('Təyinat'))
+            .append($('<select>')
                 .addClass('noSearch selectStyle')
-                .attr('id', 'doctor')
-                        
-        ))
-
-            .append($('<div>').addClass('form-group apd-form col-md-4')
-                    .append($('<label>').append('Patient'))
-                    .append($('<input>').addClass('form-control apd-form-input').attr('id', 'patientSessiaId').attr('type', 'text').prop('disabled', true)))
-
-            .append($('<div>').addClass('form-group apd-form col-md-4 patientSelectBox')
-                    .append($('<label>').append('Təyinat'))
-                    .append($('<select>').addClass('noSearch selectStyle').attr('id', 'purposeSessia')
-                            //  .append($('<option>').append(o.paymentName))
+                    .attr('id', 'purposeSessia')  ))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-4')
+            .append($('<label>')
+                .addClass('timesLabel Star1')
+                .append('Tarix')
+                .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*')))
+            .append($('<input>')
+                .addClass('form-control apd-form-input patientMandatoryDate')
+                    .attr('type', 'date')
+                    .attr('id', 'dateSessia')
+                    .prop('disabled', true)))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-2')
+            .append($('<label>')
+                .addClass('timesLabel  Star2')
+                .append('Saat (dan)')
+                .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*')))
+            .append($('<input>')
+                .addClass('form-control apd-form-input patientMandatoryTime1')
+                    .attr('type', 'time')
+                    .attr('id', 'time1')
+                    .prop('disabled', true)))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-2')
+            .append($('<label>')
+                .addClass('timesLabel Star3')
+                .append('Saat (a)')
+            .append($('<span>')
+                .addClass('mandatoryIcon ')
+                .append('*')))
+            .append($('<input>')
+                .addClass('form-control apd-form-input patientMandatoryTime2')
+                    .attr('type', 'time')
+                    .attr('id', 'time2')
+                    .prop('disabled', true)))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-2')
+            .append($('<label>')
+                .addClass('isNowLabel')
+                .append($('<input>')
+                    .attr('type', 'checkbox')
+                .addClass('toDoLi')
+                    .attr('id', 'currentTime')
+                    .prop('checked', true)
+                    .attr('onclick', 'toggleSessionDate(this)'))
+            .append($('<span>')
+                .addClass('okay'))
+            .append($('<label>')
+            .append('İndi'))
                             ))
-
-            .append($('<div>').addClass('form-group apd-form col-md-4')
-                    .append($('<label>').addClass('timesLabel Star1').append('Tarix').append($('<span>').addClass('mandatoryIcon').append('*')))
-                    .append($('<input>').addClass('form-control apd-form-input patientMandatoryDate').attr('type', 'date').attr('id', 'dateSessia').prop('disabled', true)))
-
-            .append($('<div>').addClass('form-group apd-form col-md-2')
-                    .append($('<label>').addClass('timesLabel  Star2').append('Saat (dan)').append($('<span>').addClass('mandatoryIcon').append('*')))
-                    .append($('<input>').addClass('form-control apd-form-input patientMandatoryTime1').attr('type', 'time').attr('id', 'time1').prop('disabled', true)))
-
-            .append($('<div>').addClass('form-group apd-form col-md-2')
-                    .append($('<label>').addClass('timesLabel Star3').append('Saat (a)').append($('<span>').addClass('mandatoryIcon ').append('*')))
-                    .append($('<input>').addClass('form-control apd-form-input patientMandatoryTime2').attr('type', 'time').attr('id', 'time2').prop('disabled', true)))
-
-            .append($('<div>').addClass('form-group apd-form col-md-2')
-                    .append($('<label>').addClass('isNowLabel').append($('<input>').attr('type', 'checkbox').addClass('toDoLi').attr('id', 'currentTime').prop('checked', true).attr('onclick', 'toggleSessionDate(this)'))
-                            .append($('<span>').addClass('okay'))
-                            .append($('<label>').append('İndi'))
-                            ))
-
-            .append($('<div>').addClass('form-group apd-form col-md-12')
-                    .append($('<label>').append('İzahat'))
-                    .append($('<input>').addClass('form-control apd-form-input').attr('type', 'text').attr('id', 'sessiaText')))
+// ---------------------------------------
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-12')
+            .append($('<label>')
+               .append('İzahat'))
+            .append($('<input>')
+                .addClass('form-control apd-form-input')
+                    .attr('type', 'text')
+                    .attr('id', 'sessiaText')))
 
             )
 
@@ -592,13 +549,17 @@ function addNewSessiaArea() {
 
     var List = $('#purposeSessia');
     for (var i = 0; i < purposes.length; i++) {
-        var p = $('<option>').attr('value', purposes[i].id).append(purposes[i].paymentName);
+        var p = $('<option>')
+            .attr('value', purposes[i].id)
+            .append(purposes[i].paymentName);
         List.append(p);
     }
 
     var doc = $('#doctor');
     for (var i = 0; i < doctor.length; i++) {
-        var d = $('<option>').attr('value', doctor[i].id).append(doctor[i].userPersonName, doctor[i].userPersonSurname, doctor[i].userPersonMiddlename);
+        var d = $('<option>')
+            .attr('value', doctor[i].id)
+            .append(doctor[i].userPersonName, doctor[i].userPersonSurname, doctor[i].userPersonMiddlename);
         doc.append(d);
     }
 
@@ -709,8 +670,10 @@ function InsertNewSessia() {
 function toggleSessionDate(el) {
 
 
-    var isnow = $(el).closest(".apd-form").find("#currentTime").prop('checked');
-    console.log(isnow)
+    var isnow = $(el).closest(".apd-form")
+        .find("#currentTime")
+        .prop('checked');
+
     if (isnow === false) {
         $("#dateSessia").prop('disabled', false);
         $("#time1").prop('disabled', false);
@@ -871,6 +834,7 @@ function AddNewPasientArea(resData) {
                                     .append('*')))
                     .append($('<input>')
                             .addClass('form-control')
+                            .addClass('patient_mandatory')
                             .attr('type', 'text')
                             .attr('id', 'patientName')
                             .attr('value', patient)))
@@ -882,7 +846,7 @@ function AddNewPasientArea(resData) {
                     .append($('<input>')
                             .addClass('form-control')
                             .attr('type', 'text')
-                            .attr('id', 'patientSurname')
+                            .attr('id', 'patient Surname')
                             .attr('value', patientSurname2)))
 
             .append($('<div>')
@@ -892,15 +856,19 @@ function AddNewPasientArea(resData) {
                     .append($('<input>')
                             .addClass('form-control')
                             .attr('type', 'text')
-                            .attr('id', 'patientMiddleName')
+                            .attr('id', 'patient MiddleName')
                             .attr('value', patientMiddleName2)))
 
             .append($('<div>')
                     .addClass('form-group col-md-4')
                     .append($('<label>')
-                            .append('Doğum Tarixi'))
+                            .append('Doğum Tarixi')
+                    .append($('<span>')
+                            .addClass('mandatoryIcon')
+                            .append('*')))
                     .append($('<input>')
                             .addClass('form-control')
+                            .addClass('birthday_mandatory')
                             .attr('type', 'date')
                             .attr('id', 'patientBirthDate')
                             .attr('value', patientBirthDate2)))
@@ -928,64 +896,64 @@ function AddNewPasientArea(resData) {
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('mobile1'))
+                            .append('Mobile Tel'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'mobile1')
+                            .attr('type', 'number')
+                            .attr('id', 'Mobile Tel')
                             .val('')))
 
 
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('mobile2'))
+                            .append('Mobile Tel-2'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'mobile2')
+                            .attr('type', 'number')
+                            .attr('id', 'Mobile Tel-2')
                             .val('')))
 
 
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('telephone1'))
+                            .append('Telefon-1'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'telephone1')
+                            .attr('type', 'number')
+                            .attr('id', 'Telefon-1')
                             .val('')))
 
 
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('telephone2'))
+                            .append('Telefon-2'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'telephone2')
+                            .attr('type', 'number')
+                            .attr('id', 'Telefon-2')
                             .val('')))
 
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('email1'))
+                            .append('Email-1'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'email1')
+                            .attr('type', 'email')
+                            .attr('id', 'Email-1')
                             .val('')))
 
             .append($('<div>')
                     .addClass('form-group col-md-3')
                     .append($('<label>')
-                            .append('email2'))
+                            .append('Email-2'))
                     .append($('<input>')
                             .addClass('form-control')
-                            .attr('type', 'text')
-                            .attr('id', 'email2')
+                            .attr('type', 'email')
+                            .attr('id', 'Email-2')
                             .val('')))
 
             .append($('<div>').addClass('form-group col-md-3  ').
@@ -1006,12 +974,12 @@ function AddNewPasientArea(resData) {
 
             .append($('<div>').addClass('form-group col-md-6').
                     append($('<label>')
-                            .append('addressLine'))
+                            .append('Ünvan'))
                     .append($('<textarea>')
                             .attr('rows', '2')
                             .addClass('form-control')
                             .attr('type', 'text')
-                            .attr('id', 'addressLine')
+                            .attr('id', 'Ünvan')
                             .val('')))
 
 
@@ -1125,6 +1093,8 @@ function AddNewPasientArea(resData) {
     genderFn();
     bloodGroupFn();
     rhFactorFn();
+
+    GetPatientList(1, 10);
 }
 
 function maritalStatusFn() {
@@ -1283,11 +1253,30 @@ function rhFactorFn() {
 
 //5. start Pasient DataTable----------------------------------------
 
-function GetPatientList(e) {
+var maxPageLimit;
 
-    var json = initJSON();
+function GetPatientList(currentPage, pageRowCount) {
+
+    var startLimit= currentPage * pageRowCount - pageRowCount;
+        
+
+    var json = { kv: {} };
+    try {
+        json.kv.cookie = getToken();
+        json.kv.startLimit = startLimit; 
+        json.kv.endLimit = currentPage * pageRowCount; 
+    } catch (err) {
+   
+    }
+
+//    if(maxPageLimit < currentPage * pageRowCount){
+//     json.kv.startLimit = startLimit-1; 
+//        json.kv.endLimit=maxPageLimit-1;
+//    }
+
 
     var data = JSON.stringify(json);
+    console.log(data);
     $.ajax({
         url: urlGl + "api/post/srv/serviceCrGetPatientList",
         type: "POST",
@@ -1296,16 +1285,17 @@ function GetPatientList(e) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            PasientDataTable(res);
-            patientListTableGen();
-
+            maxPageLimit=res.tbl[0].rowCount
+            PasientDataTable(res, startLimit);  
+            patientListTableGen(currentPage, res.tbl[0].rowCount, pageRowCount);
+        
         },
         error: function (res, status) {
             //  lert(getMessage('somethingww'));
         }
     });
 }
-function PasientDataTable(res) {
+function PasientDataTable(res, startLimit) {
     var PasientThead = $('#PasinetTableThead')
     PasientThead.html('');
 
@@ -1323,7 +1313,7 @@ function PasientDataTable(res) {
             .append($('<th>').append('Ölkə'))
             .append($('<th>').append('Şəhər'))
             .append($('<th>').append('İzahat'))
-            .append($('<th>').append('Ətraflı'))
+            .append($('<th>').addClass('noExport').append('Ətraflı'))
             .append($('<th>').addClass('noExport').append('Silmək'))
 
     PasientThead.append(pT);
@@ -1338,10 +1328,10 @@ function PasientDataTable(res) {
     
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        var t = ($('<tr>')
-                .append($('<td>').addClass('apd-table-td').append(i + 1))
+        var t = ($('<tr>').attr('id', 'patinet_tr'+o.id)
+                .append($('<td>').addClass('apd-table-td').append(startLimit+i + 1))
                 .append($('<td>').addClass('_0p').append(o.patientName))
-                .append($('<td>').addClass('_0p').append(o.patientBirthDate))
+                .append($('<td>').addClass('_0p').append(convertDate(o.patientBirthDate)))
                 .append($('<td>').addClass('_1p').append(o.sexName))
                 .append($('<td>').addClass('_2p ').append(o.occupationName))
                 .append($('<td>').addClass('_3p ').append(o.occupationOther))
@@ -1352,16 +1342,21 @@ function PasientDataTable(res) {
                 .append($('<td>').addClass('_8p').append(''))
                 .append($('<td>').addClass('_9p').append(o.city))
                 .append($('<td>').addClass('_10p').append(o.description))
+
                 .append($('<td>').addClass('_11p').append($('<a>')
                         .attr('data-toggle', 'modal')
                         .attr('data-target', '#pasientAddModal')
                         .attr("onclick", " updatePasient('" + o.id + "')")
-                        .append($('<i>')
-                                .addClass('fa fa-pencil-square-o edit-icon edit-btn'))))
+                .append($('<i>')
+                        .addClass('fa fa-pencil-square-o edit-icon edit-btn'))))
+
                 .append($('<td>')
                         .addClass('_12p')
+                .append($('<a>')
+                        .attr('onclick','deletePatient("'+o.id+'")')
+                        .attr('id', 'delete_p'+o.id)
                         .append($('<i>')
-                                .addClass('fa fa-trash trash-icon')))
+                        .addClass('fa fa-trash trash-icon'))))
                 )
 
         table.append(t);
@@ -1556,38 +1551,53 @@ function incspectionTable(res) {
     var tableConst = $('#constHeader').html('');
     var c = $('<div>').addClass('row constHeader')
 
-            .append($('<div>').addClass('form-group apd-form col-md-6')
-                    .append($('<label>').addClass('').append('Patient ID'))
-                    .append($('<div>')
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-6')
+            .append($('<label>')
+                    .addClass('')
+                    .append('Patient ID'))
+            .append($('<div>')
                     .addClass('form-control apd-form-input_constHeader ')
                     .append(obj[0].patientName)))
 
 
-            .append($('<div>').addClass('form-group apd-form col-md-6')
-                    .append($('<label>').addClass('').append('Həkim'))
-                    .append($('<div>')
+            .append($('<div>')
+               .addClass('form-group apd-form col-md-6')
+            .append($('<label>')
+                    .addClass('')
+                    .append('Həkim'))
+            .append($('<div>')
                     .addClass('form-control apd-form-input_constHeader ')
                     .append(obj[0].doctorFullname)))
 
 
-            .append($('<div>').addClass('form-group apd-form col-md-6')
-                    .append($('<label>').addClass('').append('Modul adı'))
-                    .append($('<div>')
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-6')
+            .append($('<label>')
+                .addClass('')
+                .append('Modul adı'))
+            .append($('<div>')
                     .addClass('form-control apd-form-input_constHeader ')
                     .append(obj[0].moduleName)))
 
-            .append($('<div>').addClass('form-group apd-form col-md-4')
-                    .append($('<label>').addClass('').append('Tarix'))
-                    .append($('<div>')
-                    .addClass('form-control apd-form-input_constHeader ')
-                    .append(convertDate(obj[0].inspectionDate))))
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-4')
+            .append($('<label>')
+                .addClass('')
+                .append('Tarix'))
+            .append($('<div>')
+                .addClass('form-control apd-form-input_constHeader ')
+                .append(convertDate(obj[0].inspectionDate))))
 
 
-            .append($('<div>').addClass('form-group apd-form col-md-2')
-                    .append($('<label>').addClass('timsLabel').append('Saat'))
-                    .append($('<div>')
-                    .addClass('form-control apd-form-input_constHeader ')
-                    .append(convertTimeSeconds(obj[0].inspectionTime))))
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-2')
+            .append($('<label>')
+                .addClass('timsLabel')
+                .append('Saat'))
+            .append($('<div>')
+                .addClass('form-control apd-form-input_constHeader ')
+                .append(convertTimeSeconds(obj[0].inspectionTime))))
 
     tableConst.append(c)
 
@@ -1605,10 +1615,18 @@ function incspectionTable(res) {
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
         var t = ($('<tr>')
-                .append($('<td>').addClass('apd-table-td').append(i + 1))
-                .append($('<td>').addClass('apd-table-td').append(o.attributeName))
-                .append($('<td>').addClass('apd-table-td').append(o.finalValue))
-                .append($('<td>').addClass('apd-table-td').append(o.submoduleName))
+                .append($('<td>')
+                    .addClass('apd-table-td')
+                    .append(i + 1))
+                .append($('<td>')
+                    .addClass('apd-table-td')
+                    .append(o.attributeName))
+                .append($('<td>')
+                    .addClass('apd-table-td')
+                    .append(o.finalValue))
+                .append($('<td>')
+                    .addClass('apd-table-td')
+                    .append(o.submoduleName))
 
                 )
 
@@ -1640,7 +1658,7 @@ function getIncspection() {
         async: false,
         success: function (res) {
             incspectionTable(res)
-            dataTable3()
+          
         },
         error: function (res, status) {
             //  lert(getMessage('somethingww'));
@@ -1715,7 +1733,10 @@ function pasientFnItemClick(id, e11){
 
      var patientCount = $("#fiter-content .patinet-filter-content-toggle");
      var badge=$('#badge-patient').html('');
-     var badge2=$('<span>').addClass('count-style').attr('id','pasient-count').append(Number(patientCount.length))
+     var badge2=$('<span>')
+        .addClass('count-style')
+            .attr('id','pasient-count')
+        .append(Number(patientCount.length))
      badge.append(badge2)
 
      
@@ -1724,6 +1745,7 @@ function pasientFnItemClick(id, e11){
 function pasientItem(id, e11){
     delete objFilter.pasient[id];
     getFilter(objFilter)
+
     $('#spanPas'+id).remove()
     $('#pasient'+ id).removeClass('active'); 
      var a=Number($('#badge-patient span').text())-1;
@@ -2164,7 +2186,7 @@ function bloodFnItemClick(id){
      blood.append(blood2)
 }
 
-   function bloodItem(id){
+function bloodItem(id){
     delete objFilter.bloodGroup[id];
     getFilter(objFilter)
 
@@ -2180,6 +2202,7 @@ function bloodFnItemClick(id){
        }
 }
 
+// ================Filter Date==============================
 $(document).on('change', '.dateOne', function(){
     let date1=$('#date1').val().replaceAll('-',''); 
     let date2=$('#date2').val().replaceAll('-',''); 
@@ -2188,9 +2211,30 @@ $(document).on('change', '.dateOne', function(){
     getFilter(objFilter);
 })
 
+function removeDateOne(){
+    delete objFilter.date;
+    getFilter(objFilter) 
+    $('#date1').val('')
+    .attr('type', 'text')
+    .attr('type', 'date');
+    
+}
+function removeDateTwo(){
+    delete objFilter.date;
+    getFilter(objFilter) 
+    $('#date2').val('')
+    .attr('type', 'text')
+    .attr('type', 'date');
+    $('#pagination-pasient').show()
+}
 // ================================================================
 // =================================================================
 
+// function deleteAllFilter(id){
+//     delete objFilter.date;
+//     delete objFilter.bloodGroup[id];
+//     getFilter(objFilter) 
+// }
 
 function pasientFilterSection(){
 
@@ -2256,22 +2300,31 @@ function pasientFilterSection(){
         .addClass('panel-body row')
     
     .append($('<div>')
-    .addClass('col-12 mt-1 mb-1')
+    .addClass('col-10 mt-1 mb-1 d-flex')
     .append($('<input>')
             .attr('type','date')
             .addClass('dateOne')
             .attr("id","date1")
         .addClass('form-control')
-            ))
+            )
+    .append($('<div>')
+        .addClass('col-1 menu-filter-close ml-1 mt-1')
+            .attr('onclick', 'removeDateOne()'))        
+            
+            )
 
      .append($('<div>')
-     .addClass('col-12 mt-1 mb-1')
+     .addClass('col-10 mt-1 mb-1 d-flex')
     .append($('<input>')
             .attr('type','date')
             .addClass('dateOne')
             .attr("id","date2")
         .addClass('form-control')
-            ))
+            )
+    .append($('<div>')
+        .addClass('col-1 menu-filter-close  ml-1 mt-1')
+            .attr('onclick', 'removeDateTwo()'))
+            )
          )))
  //  -----------Gender------------------------------
 
@@ -2451,17 +2504,19 @@ function pasientFilterSection(){
 }
 
 
-function getFilter(objFilter){
-  
-    var json = {kv: {}};
+function getFilter(objFilter, currentPage){
+     
+    var startLimit= currentPage * pageRowCount - pageRowCount
 
+    var json = { kv: {} };
     try {
-        console.log(getToken())
         json.kv.cookie = getToken();
-
+        json.kv.startLimit = startLimit; 
+        json.kv.endLimit = currentPage*pageRowCount; 
     } catch (err) {
-
+   
     }
+
   
     var concatPatient="";
     var concatGender="";
@@ -2501,7 +2556,7 @@ function getFilter(objFilter){
      json.kv.occupation=concatOccu;
      json.kv.bloodGroup=concatBlood;
 
-     json.kv.insertDate=objFilter.date;
+     json.kv.patientBirthDate=objFilter.date;
    
 
     var data = JSON.stringify(json);
@@ -2514,9 +2569,15 @@ function getFilter(objFilter){
         async: false,
         success: function (res) {
             $('#patientListTable').DataTable().destroy();  
-            PasientDataTable(res)                    
-            patientListTableGen();
-        
+            PasientDataTable(res, 0)    
+                     
+              if( res.tbl[0] === undefined){        
+                patientListTableGen(currentPage, 10, pageRowCount);
+                
+            } else{
+                patientListTableGen(currentPage, res.tbl[0].rowCount, pageRowCount);
+            }
+         
             },
         error: function (res, status) {
             lert(getMessage('somethingww'));
@@ -2526,3 +2587,116 @@ function getFilter(objFilter){
     
 
 }
+
+// Patient search
+$(document).on('keyup','#patientSearch', function(){
+    let val =$(this).val(); 
+    let allData='%%'+val+'%%';
+    
+
+    var startLimit= pageNumber * pageRowCount - pageRowCount
+ 
+    var json = { kv: {} };
+    try {
+        json.kv.cookie = getToken();
+        json.kv.startLimit = startLimit; 
+        json.kv.endLimit = pageNumber*pageRowCount; 
+    } catch (err) {
+   
+    }
+     json.kv.patientName=allData;
+  
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetPatientList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#patientListTable').DataTable().destroy();  
+            PasientDataTable(res, 0)                    
+              if( res.tbl[0] === undefined){        
+                patientListTableGen(pageNumber, 10, pageRowCount);
+                
+            } else{
+                patientListTableGen(pageNumber, res.tbl[0].rowCount, pageRowCount);
+            }
+         
+            },
+        error: function (res, status) {
+            lert(getMessage('somethingww'));
+        }
+    });
+
+})
+     
+// function deleteMessage(id){
+   
+//         var json = { kv: {} };
+//         try {
+//             json.kv.cookie = getToken();
+          
+//         } catch (err) {
+        
+//         }
+//         json.kv.id=id;
+//             // var json = initJSON();
+           
+//             var data = JSON.stringify(json);
+//             $.ajax({
+//                 url: urlGl + "api/post/srv/serviceCrGetMessageText",
+//                 type: "POST",
+//                 data: data,
+//                 contentType: "application/json",
+//                 crossDomain: true,
+//                 async: true,
+//                 success: function (res) {
+//                     // deletePatient(id)
+//                 }
+//             });
+
+// }
+
+function deletePatient(id ){
+
+    var json = { kv: {} };
+    try {
+        json.kv.cookie = getToken();
+    
+    } catch (err) {
+
+    }
+    json.kv.id=id;
+
+   
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrDeletePatient",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function () {
+         
+            alert('Məlumat silindi')
+      $('#patientListTable').DataTable().destroy();
+
+       GetPatientList(1, 10);                       
+         
+        }
+    });
+
+
+}
+
+
+
+
+   
+
+  
+

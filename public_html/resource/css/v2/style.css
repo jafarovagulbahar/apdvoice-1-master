@@ -15,6 +15,15 @@ body {
 
 a {
     color: #1977cc;
+  
+}
+.dropdown-item{
+    word-break: break-all;
+    white-space: normal;
+}
+table li span{
+    word-break: break-all;
+    white-space: normal;
 }
 
 a:hover {
@@ -511,7 +520,7 @@ selectBox with search
     background-color: #fff;
     border-radius: 6px;
     border: solid 1px #eee;
-    box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
+    /* box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5); */
     box-sizing: border-box;
     cursor: pointer;
     display: block;
@@ -532,10 +541,10 @@ selectBox with search
     user-select: none;
     white-space: nowrap;
     width: auto;
-    border-top-left-radius: 50px !important;
+    /* border-top-left-radius: 50px !important;
     border-bottom-left-radius: 50px !important;
     border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
+    border-bottom-right-radius: 50px !important; */
 
 
 }
@@ -1025,25 +1034,25 @@ label {
 }
 .apd-form-input,
 .apd-form-select{
-    height: 32px;
+    /* height: 32px;
     line-height: 32px;
     box-shadow: 0 1px 4px  #410a5347;
     border: none;
-    border-radius: 30px;
+    border-radius: 30px; */
 }
 .form-control{
-    height: 32px;
+    /* height: 32px;
     line-height: 32px;
     box-shadow: 0 1px 4px  #410a5347;
     border: none;
-    border-radius: 30px;
+    border-radius: 30px; */
 }
 .apd-form-input_constHeader{
-    height: 32px;
+    /* height: 32px;
     line-height: 1;
     box-shadow: 0 1px 4px  #410a5347;
     border: none;
-    border-radius: 30px;
+    border-radius: 30px; */
 }
 .dropMenuQues{
     height: 300px;
@@ -1093,12 +1102,12 @@ label {
 }
 
 .patientMandatory{
-    border:none;
+    /* border:none; */
 }
 .patientMandatoryDate,
 .patientMandatoryTime1,
 .patientMandatoryTime2{
-    border:none;
+    /* border:none; */
 }
 
 .timesLabel{
@@ -1399,4 +1408,38 @@ width: auto;
 }
 /* ============================ */
 
+/* pagination  */
+.bootpag li a{
+    padding: 0px 10px;
+    color: #000000;
+  }
+.bootpag li{
+    box-shadow: 1px 1px 8px 0px #dbddea;
+    padding: 4px 2px;
 
+  
+    }
+.bootpag li.active{
+      background-color: #ffffff;
+      box-shadow:inset 1px 1px 8px 0px #dbddea;
+    
+    }
+.bootpag li.active a{
+      color: #0563bb;
+      
+}
+.dt-buttons.ui-buttonset{
+    margin-bottom: 10px !important;
+}
+table li{
+    font-size: 14px;
+}
+
+@media (max-width: 500px){
+table li {
+    font-size: 12px;
+}
+}
+.compact{
+    width: 100px !important;
+}

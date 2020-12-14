@@ -36,12 +36,10 @@
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
                     <!-- Home Navbar menu -->
-                    <li class="drop-down"><a href="#">Ana səhifə <i class="fa fa-angle-down"></i></a>
-                        <ul>
-                            <li class="dropMenu "> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
-                            <li class="dropMenu "> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Pasients</a></li>
-                        </ul>
-                    </li>
+                   
+                        <li class="drop-down"> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
+                        <li class="drop-down"> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Patients</a></li>
+                      
                     <!-- Finance Navbar menu -->
                     <li class="drop-down"><a href="#">Maliyyə <i class="fa fa-angle-down"></i></a>
                         <ul>
@@ -111,7 +109,7 @@
     </div>
     </header><!-- End Header -->
 
-    <div id="page"> 
+    
         <!-- ======= patient List ======= -->
         <section id="apdDataList " class="patientList">
             <div class="container">     
@@ -122,7 +120,7 @@
                             <div class="banner">
                                 <nav class="nav-menu2">
                                     <ul >
-                                        <li ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
+                                        <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#incModal" onclick="getIncspection()"><i class="fa fa-user-md" aria-hidden="true" ></i><span>Müayinə siyahisi</span></a></li>
                                         <li><a href="#"><i class="fa fa-stethoscope" aria-hidden="true"></i><span>Sessiya siyahisi</span></a></li>
                                         <li><a href="#"><i class="fa fa-medkit" aria-hidden="true" ></i><span>Sessiyanı bitir</span></a></li>
@@ -159,35 +157,46 @@
                 </div>
 
 
-                <!-- ======= sessia List ======= -->
+             
 
                 <div class="col-md-12 apd-page-btn" id='bodyDiv' style="display: none;">
 
                 </div>
               
                 <div class="content">   
-
+               <!-- ======= appointmentlist List ======= -->
                     <div class="content-body-appointmentlist content-body-class" >
-                        <div id="geeks"></div>
-                        <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black"> 
+                       
+                        <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black" width="100%"> 
 
                             <thead id="DoctorDataTableHeader"> </thead>
                             <tbody id="DoctorDataTable">  </tbody>
                         </table>
+                       <div class="col-12 d-flex justify-content-end">
+                        <p id="pagination-appointment"></p>
+                       </div>
                     </div>
-
+                 <!-- ======= Patient List ======= -->
                     <div class="content-body-patientlist content-body-class" >
                        <div class="hide-content-pasient"> 
                         <div class="col-12 d-flex justify-content-end mb-2 pr-0">
-                            <span class="menu-filter title-tip" onclick="FilterSectionToggle()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span>   
-                       
+                            <div class="dataTables_filter">
+                                <label>
+                                   <input type="text" id="patientSearch">
+                                </label>
+                            </div>  
+                            <span class="menu-filter title-tip" onclick="FilterSectionToggle()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span> 
                         </div> 
                        </div>
-                     
-                        <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black"> 
+                    
+                        <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black" width="100%"> 
                             <thead id="PasinetTableThead"> </thead>
                             <tbody id="PasinetTableBody">  </tbody>
                         </table>
+                        <div class="col-12 d-flex justify-content-end">
+                            <p id="pagination-pasient"></p>
+                        </div>
+
                     </div>
 
                     <footer class="footer">
@@ -209,7 +218,7 @@
             </div>
         </section>
 
-    </div>
+   
 
     <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
@@ -690,39 +699,24 @@
  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.js"></script>  
 
+ <script src="https://cdn.rawgit.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
  <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/FileSaver.js"></script>
  <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/jquery.wordexport.js"></script>
  <script src="resource/js/v2/main.js"></script>
  <script src="resource/js/v2/patientList.js"></script>
- <script src="resource/js/v2/doctorDataTable.js"></script>
+ <script src="resource/js/v2/appointmentList.js"></script>
+ 
  <script src="resource/js/v2/utility.js"></script>
 
 
 
 
     <script type="text/javascript">
+     
+        GetAppointmentList(1, 10)
 
-        //        $('.dropMenu a').click(function (event) {
-        //            link = $(this).attr('href');
-        //            $.ajax({
-        //                url: link,
-        //            })
-        //                    .done(function (html) {
-        //                        $('#page').empty().append(html);
-        //                    })
-        //                    .fail(function () {
-        //                        console.log('error');
-        //                    })
-        //                    .always(function (html) {
-        //                        console.log('complate');
-        //
-        //                    })
-        //            return false;
-        //        });
-      
-        GetAppointmentList();
-        
+       
 
         jQuery(document).ready(function ($) {
             $(".word-export").click(function (event) {
