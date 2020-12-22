@@ -203,6 +203,8 @@ $(document).on("click", '#patinetlistcombo a', function (e) {
 
 $(document).on("click", '#sessiaBtn', function (e) {
   var  valSessia = $('#pasientInput').val();
+
+  
   if(valSessia===''){
     // console.log('pasient daxil et')
   }else{
@@ -559,7 +561,9 @@ function addNewSessiaArea() {
     for (var i = 0; i < doctor.length; i++) {
         var d = $('<option>')
             .attr('value', doctor[i].id)
-            .append(doctor[i].userPersonName, doctor[i].userPersonSurname, doctor[i].userPersonMiddlename);
+            .append(doctor[i].userPersonName, 
+                    doctor[i].userPersonSurname,
+                    doctor[i].userPersonMiddlename);
         doc.append(d);
     }
 
@@ -1253,7 +1257,7 @@ function rhFactorFn() {
 
 //5. start Pasient DataTable----------------------------------------
 
-var maxPageLimit;
+// var maxPageLimit;
 
 function GetPatientList(currentPage, pageRowCount) {
 
@@ -1285,7 +1289,7 @@ function GetPatientList(currentPage, pageRowCount) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            maxPageLimit=res.tbl[0].rowCount
+            // maxPageLimit=res.tbl[0].rowCount
             PasientDataTable(res, startLimit);  
             patientListTableGen(currentPage, res.tbl[0].rowCount, pageRowCount);
         
@@ -1366,12 +1370,6 @@ function PasientDataTable(res, startLimit) {
 }
 
 
-
-
-// 6. Seessia - Nurse (TibbBacısı) Question
-
-
-// bu funksiya api-si ferqli yerlerdede işlendiyi ucun generaldi (içinde ayry ayri funksiyalar çagirilıb)
 function generalPatientFn(id) {
 
     var json = {kv: {}};
@@ -1828,6 +1826,7 @@ function genderFnItemClick(id){
 
    objFilter.gender[id]=text;
 
+
    getFilter(objFilter)
 
    var filter=$('#gender-content2');
@@ -2230,11 +2229,6 @@ function removeDateTwo(){
 // ================================================================
 // =================================================================
 
-// function deleteAllFilter(id){
-//     delete objFilter.date;
-//     delete objFilter.bloodGroup[id];
-//     getFilter(objFilter) 
-// }
 
 function pasientFilterSection(){
 
@@ -2569,6 +2563,7 @@ function getFilter(objFilter, currentPage){
         async: false,
         success: function (res) {
             $('#patientListTable').DataTable().destroy();  
+            
             PasientDataTable(res, 0)    
                      
               if( res.tbl[0] === undefined){        
@@ -2617,6 +2612,7 @@ $(document).on('keyup','#patientSearch', function(){
         async: false,
         success: function (res) {
             $('#patientListTable').DataTable().destroy();  
+
             PasientDataTable(res, 0)                    
               if( res.tbl[0] === undefined){        
                 patientListTableGen(pageNumber, 10, pageRowCount);
@@ -2633,33 +2629,6 @@ $(document).on('keyup','#patientSearch', function(){
 
 })
      
-// function deleteMessage(id){
-   
-//         var json = { kv: {} };
-//         try {
-//             json.kv.cookie = getToken();
-          
-//         } catch (err) {
-        
-//         }
-//         json.kv.id=id;
-//             // var json = initJSON();
-           
-//             var data = JSON.stringify(json);
-//             $.ajax({
-//                 url: urlGl + "api/post/srv/serviceCrGetMessageText",
-//                 type: "POST",
-//                 data: data,
-//                 contentType: "application/json",
-//                 crossDomain: true,
-//                 async: true,
-//                 success: function (res) {
-//                     // deletePatient(id)
-//                 }
-//             });
-
-// }
-
 function deletePatient(id ){
 
     var json = { kv: {} };

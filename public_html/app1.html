@@ -91,22 +91,39 @@
         <div id="filter-content">       
            <div class="content-fiter">
             <div class="col-12 mt-3 mb-3 d-flex justify-content-end">
-                <div class="col-11">Filter</div>
+                <div class="col-11">Patient Filter</div>
                 <div class="col-1 menu-filter-close"  onclick="FilterSectionToggleClose()"></div>
                 
             </div>
 
         <div class="col-12 pl-0 pr-0">
            
-              <div class="panel-group" id="pasientFilterAccordion" >
-                     
-                    
-                </div>
+            <div class="panel-group" id="pasientFilterAccordion" >
+            </div>
                   
         </div>
         </div>
           
-    </div>
+      </div>
+
+      <!-- --------------Appointment Filter---------- -->
+      <div id="filter-content-appointment">       
+        <div class="content-fiter">
+         <div class="col-12 mt-3 mb-3 d-flex justify-content-end">
+             <div class="col-11">Appointment Filter</div>
+             <div class="col-1 menu-filter-close"  onclick="FilterAppointment_ToggleClose()"></div>
+             
+         </div>
+
+     <div class="col-12 pl-0 pr-0">
+        
+           <div class="panel-group" id="appointmentFilterAccordion" >
+          </div>
+               
+       </div>
+     </div>
+       
+   </div>
     </header><!-- End Header -->
 
     
@@ -166,9 +183,18 @@
                 <div class="content">   
                <!-- ======= appointmentlist List ======= -->
                     <div class="content-body-appointmentlist content-body-class" >
-                       
+                   
+                    <div class="hide-content-appointem"> 
+                        <div class="col-12 d-flex justify-content-end mb-2 pr-0">
+                            <!-- <div class="dataTables_filter">
+                                <label>
+                                   <input type="text" id="patientSearch">
+                                </label>
+                            </div>   -->
+                            <span class="menu-filter title-tip" onclick="FilterToggle_Appointmet()" id="filter-btn-appointment" orginal-title="Filter"><i class="fa fa-filter"></i></span>  
+                        </div> 
+                       </div>
                         <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black" width="100%"> 
-
                             <thead id="DoctorDataTableHeader"> </thead>
                             <tbody id="DoctorDataTable">  </tbody>
                         </table>
@@ -185,7 +211,7 @@
                                    <input type="text" id="patientSearch">
                                 </label>
                             </div>  
-                            <span class="menu-filter title-tip" onclick="FilterSectionToggle()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span> 
+                            <span class="menu-filter title-tip" onclick="FilterToggle_patient()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span> 
                         </div> 
                        </div>
                     

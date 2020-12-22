@@ -10,7 +10,6 @@ body {
     position: relative; 
     background-attachment: fixed;
     background-position-x: right;
-
 }
 
 a {
@@ -1443,3 +1442,33 @@ table li {
 .compact{
     width: 100px !important;
 }
+
+
+/* =====Appointment filter=============== */
+
+
+#filter-content-appointment{
+    position: absolute;
+    -moz-box-shadow: 0px 10px 8px rgb(100,100,100);
+    -webkit-box-shadow: 0px 10px 8px rgb(100,100,100);
+    box-shadow: 0px 10px 8px rgb(100,100,100);
+	background: rgb(255, 255, 255);
+	width: 300px;
+	height: 100vh;
+	overflow-y: auto;
+	transition-property: transform;
+	transition-duration: .4s;
+	transform: translateX(320px);
+    right: 0px;
+}
+#filter-content-appointment.open{
+	transform: translateX(0);
+}
+
+#appointmentFilterAccordion .dropdown-menu{
+    height: 220px !important;
+    overflow: auto;
+ }
+ #appointmentFilterAccordion .form-control{
+     line-height: 1;
+ }

@@ -155,7 +155,7 @@
 // ===============FILTER FUNCTION=======================
 
 
-function FilterSectionToggle() {
+function FilterToggle_patient() {
   $('#filter-content').addClass('open')
   
 }
@@ -170,7 +170,7 @@ $(document).one( "click","#filter-btn", function() {
 
   
 });
-// -------------FILET MAIN ITEMS ONE CLICK------------------------
+// -------------Patient Filter Item Click------------------------
 $(document).one( "click","#genderOneClick", function() {
   genderFnFilter()
   
@@ -198,3 +198,42 @@ $(document).one( "click","#bloodOneClick", function() {
   bloodGroupFnFilter()
 });
 
+
+/* =====Appointment filter=============== */
+
+function FilterToggle_Appointmet() {
+  $('#filter-content-appointment').addClass('open')
+  
+}
+
+function FilterAppointment_ToggleClose() {
+  $('#filter-content-appointment').removeClass('open')
+
+}
+
+$(document).one( "click", "#filter-btn-appointment", function() {
+  appointmentFilterSection()
+
+  
+});
+
+// -------------Appointment Filter Item Click------------------------
+$(document).one( "click","#purposeOneClick", function() {
+  purposeFnFilter()
+});
+
+$(document).one( "click","#doctorOneClick", function() {
+  doctorFnFilter()
+});
+
+$(document).one( "click","#patientAppOneClick", function() {
+  patientAppFnFilter()
+});
+
+$(document).one( "click","#statusOneClick", function() {
+  statusFnFilter()
+});
+
+$(document).one( "click","#sexOneClick", function() {
+  sexFnFilter()
+});
