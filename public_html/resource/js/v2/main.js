@@ -237,3 +237,11 @@ $(document).one( "click","#statusOneClick", function() {
 $(document).one( "click","#sexOneClick", function() {
   sexFnFilter()
 });
+
+ 
+  $(document).on("click", "nav li",function(event) { 
+    
+     $("nav li ").removeClass("active"); 
+     $(this).addClass("active"); 
+  });
+

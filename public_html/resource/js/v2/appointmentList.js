@@ -10,13 +10,24 @@ $(document).on('change', '#appointmentListTable_length select', function(){
     GetAppointmentList(1, pageRowCountAppointment)
   
  });
+
+ var pageNumber_a=1;
 $(document).on("page",'#pagination-appointment', function (event, num_a) {
    
     $('#appointmentListTable').DataTable().clear().destroy();
     $('#DoctorDataTableHeader').empty();
     $('#DoctorDataTable').empty();     
-    GetAppointmentList(num_a, pageRowCountAppointment)
+  
+     
+    if($('#sessionSearch').val()===''){
+        GetAppointmentList(num_a, pageRowCountAppointment)
+
+    }else{
+        pageNumber_a=num;
+    }
 })
+
+
 
 function appointmentListTableGen(currentPage, rowCount, pageRowCountAppointment) {
 
@@ -34,6 +45,7 @@ function appointmentListTableGen(currentPage, rowCount, pageRowCountAppointment)
         "pageLength": pageRowCountAppointment,   
         "paging": true,
         "autoWidth": true,
+        "searching":false,
         "buttons": [
          
             {
@@ -163,6 +175,7 @@ function doctorDataTable(res, startLimit_a) {
             .append($('<th>').append('Cinsiyyət'))
             .append($('<th>').append('Modul adı'))
             .append($('<th>').addClass('noExport').append('Delete'))
+            .append($('<th>').addClass('noExport').append('Sessionu bitir'))
 
     thead.append(p);
 
@@ -247,6 +260,14 @@ function doctorDataTable(res, startLimit_a) {
                         .attr('onclick','deleteAppointment("'+o.id+'")')
                 .append($('<i>')
                     .addClass('fa fa-trash trash-icon'))))
+// -------------------------------
+                .append($('<td>')
+                    .addClass('_11c')
+                .append($('<a>')
+                      
+                        .attr('onclick','FinishSession("'+o.id+'")')
+                .append($('<i>')
+                    .addClass('fa fa-medkit trash-icon'))))
 
                 )
 
@@ -258,7 +279,7 @@ function doctorDataTable(res, startLimit_a) {
 
 // ==================Delete appointment İtem==============
 function deleteAppointment(id ){
-
+    if (confirm('Are you sure ?')) {
     var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
@@ -278,7 +299,7 @@ function deleteAppointment(id ){
         crossDomain: true,
         async: true,
         success: function () {
-        alert('Məlumat silindi')
+     
     
       $('#appointmentListTable').DataTable().destroy();
 
@@ -286,7 +307,7 @@ function deleteAppointment(id ){
          
         }
     });
-
+    }
 
 }
 
@@ -295,7 +316,8 @@ var objFilterApp={
     purposeA:[],
     patientApp:[],
     doctor:[],
-    status:[]
+    status:[],
+    sex:[]
 }
 // 1---------------purposeFn Filter--------------------
 
@@ -319,7 +341,7 @@ function purposeFnFilter() {
                     .addClass('dropdown-item')
                     .attr('onclick','PurposeFnItemClick("'+obj[i].id+'")')
                     .attr('id', 'purpose'+ obj[i].id)
-                    .attr('value', obj[i].id)
+                    .val(obj[i].id)
                     .append(obj[i].paymentName);
                 List.append(p);
             }
@@ -336,10 +358,13 @@ function PurposeFnItemClick(id){
  
     $('#purpose'+ id).addClass('active'); 
  
-    let purposeVal=$('#purpose'+ id).text();  
+    // let purposeVal=$('#purpose'+ id).val();  
+
+    let purposeText=$('#purpose'+ id).text();  
  
+    
   
-    objFilterApp.purposeA[id]=purposeVal;
+    objFilterApp.purposeA[id]=purposeText;
 
     getFilterAppointment(objFilterApp)
    
@@ -350,7 +375,7 @@ function PurposeFnItemClick(id){
             .addClass('patinet-filter-content-toggle')
                 .attr('id','spanPurpose'+id)
         .append($('<span>')
-            .append(purposeVal))
+            .append(purposeText))
         .append($('<span>')
               .attr('onclick','purposeItemDelete("'+id+'")')
             .addClass('filter-buttons-close')  ))
@@ -367,7 +392,7 @@ function PurposeFnItemClick(id){
  
 function purposeItemDelete(id){
  
-    delete objFilterApp[id].purposeA;
+    delete objFilterApp.purposeA[id];
      
     getFilterAppointment(objFilterApp)
  
@@ -406,7 +431,7 @@ function doctorFnFilter() {
     var json = initJSON();
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGetAppointmentList",
+        url: urlGl + "api/post/srv/serviceCrGetDoctorList",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -422,11 +447,11 @@ function doctorFnFilter() {
                     .addClass('patient_li dropdown-item')
                         .attr('onclick','DoctorFnItemClick("'+obj[i].id+'")')
                         .attr('id', 'doctor'+ obj[i].id)
-                        .attr('value', obj[i].id)
-                    .append(obj[i].doctorFullname)
+                        .val(obj[i].fkDoctorUserId)
+                    .append(obj[i].userPersonName, obj[i].userPersonMiddlename, obj[i].userPersonSurname)
                     .append($('<input>')
                         .attr('type', 'hidden')
-                        .attr('value', obj[i].doctorFullname)) );
+                        .attr('value', obj[i].userPersonName)) );
                 List.append(p);
 
             
@@ -516,13 +541,12 @@ function patientAppFnFilter() {
         json.kv.cookie = getToken();
     } catch (err) {
 
-    }
-   
+    }   
 
     // var json = initJSON();
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGetAppointmentList",
+        url: urlGl + "api/post/srv/serviceCrGetPatientList",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -703,7 +727,6 @@ function statusFnItemClick(id){
  
     objFilterApp.status[id]=statusVal;
 
-    console.log( objFilterApp.status[id])
     getFilterAppointment(objFilterApp)
    
       var filter=$('#status-content');
@@ -748,91 +771,90 @@ function statusItemDelete(id){
 // 1---------------SexFn Filter--------------------
 
 function sexFnFilter() {
-    var List = $('#sexFilter').html('');
-
-    var p =$('<div>')
-    .append($('<a>')
-            .attr('href','#')
-        .addClass('dropdown-item')
-        .attr('onclick','sexFnItemClick("'+"248162"+'")')
-        .attr('id', 'sex'+ "248162")
-        // .attr('value', "248162")
-        .append('Man'))
-
-    .append($('<a>')
-            .attr('href','#')
-        .addClass('dropdown-item')
-        .attr('onclick','sexFnItemClick("'+"3927812"+'")')
-        .attr('id', 'sex'+ "3927812")
-        // .attr('value', "3927812")
-        .append('Woman'))
-
-    .append($('<a>')
-            .attr('href','#')
-        .addClass('dropdown-item')
-        .attr('onclick','sexFnItemClick("'+"416642562"+'")')
-        .attr('id', 'sex'+ "416642562")
-        // .attr('value', "416642562") 
-        .append('Other') );
-
-    List.append(p);
        
+    var json = initJSON();
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/li/sex",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+          
+            var List = $('#sexFilter').html('');
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                var p = $('<a>')
+                         .attr('href','#')
+                    .addClass('dropdown-item')
+                    .attr('onclick','sexFnItemClick("'+obj[i].id+'")')
+                    .attr('id', 'sex'+ obj[i].id)
+                    .val(obj[i].itemKey)
+                        .text(obj[i].itemValue);
+                List.append(p);
+            }
+           
+           
+        }
+    });
     
     }
     
-    function sexFnItemClick(id){
-        if($('#sex'+ id).hasClass('active') && id==id){ 
-     
-           $('#spansex'+id).remove()  
-        }
-     
-        $('#sex'+ id).addClass('active'); 
-     
-        let sexVal=$('#sex'+ id).text();  
-     
-        objFilterApp.sex=sexVal;
+function sexFnItemClick(id){
+    if($('#sex'+ id).hasClass('active') && id==id){ 
     
-        getFilterAppointment(objFilterApp)
-       
-          var filter=$('#sex-content');
+        $('#spansex'+id).remove()  
+    }
+    
+    $('#sex'+ id).addClass('active'); 
+    
+    let sex=$('#sex'+ id).text();  
+    let sexVal=$('#sex'+ id).val();  
+    
+    objFilterApp.sex[id]=sexVal;
+    getFilterAppointment(objFilterApp)
+    
+        var filter=$('#sex-content');
+    
+        var full=($('<div>')
+            .addClass('d-flex justify-content-center align-items-center')
+            .addClass('patinet-filter-content-toggle')
+                .attr('id','spansex'+id)
+        .append($('<span>')
+            .append(sex))
+        .append($('<span>')
+                .attr('onclick','sexItemDelete("'+id+'")')
+            .addClass('filter-buttons-close')  ))
+    
+        $('#badge-sex').show()
+    
+        filter.append(full)
+    
+        var statusCount = $("#sex-content .patinet-filter-content-toggle");
+        var status1=$('#badge-sex').html('');
+        var status2=$('<span>').addClass('count-style').attr('id','sex-count').append(statusCount.length)
+        status1.append(status2)
+    }
+    
+function sexItemDelete(id){
+    
+    
+    delete objFilterApp.sex[id];
         
-           var full=($('<div>')
-                .addClass('d-flex justify-content-center align-items-center')
-                .addClass('patinet-filter-content-toggle')
-                    .attr('id','spansex'+id)
-            .append($('<span>')
-                .append(sexVal))
-            .append($('<span>')
-                  .attr('onclick','sexItemDelete("'+id+'")')
-                .addClass('filter-buttons-close')  ))
-     
-           $('#badge-sex').show()
-     
-           filter.append(full)
-     
-          var statusCount = $("#sex-content .patinet-filter-content-toggle");
-          var status1=$('#badge-sex').html('');
-          var status2=$('<span>').addClass('count-style').attr('id','sex-count').append(statusCount.length)
-          status1.append(status2)
-     }
-     
-    function sexItemDelete(id){
-     
-        
-        delete objFilterApp.sex;
-         
-        getFilterAppointment(objFilterApp)
-     
-         $('#spansex'+id).remove()
-         $('#sex'+ id).removeClass('active'); 
-     
-         var a=Number($('#badge-sex span').text())-1;
-         document.getElementById('sex-count').innerHTML=a;
-     
-            if(a===0){
-              $('#badge-sex').hide()
-            }
-     } 
+    getFilterAppointment(objFilterApp)
+    
+        $('#spansex'+id).remove()
+        $('#sex'+ id).removeClass('active'); 
+    
+        var a=Number($('#badge-sex span').text())-1;
+        document.getElementById('sex-count').innerHTML=a;
+    
+        if(a===0){
+            $('#badge-sex').hide()
+        }
+    } 
 
 
 
@@ -1138,7 +1160,7 @@ function getFilterAppointment(objFilterApp, currentPage){
 
   
     for (var key in objFilterApp.purposeA) {
-        concatPurpose+=key+'%IN%';
+        concatPurpose+=objFilterApp.purposeA[key]+'%IN%';
     }
     
     for (var key in objFilterApp.patientApp) {
@@ -1155,18 +1177,19 @@ function getFilterAppointment(objFilterApp, currentPage){
     }
 
     for (var key in objFilterApp.sex) {
-        concatSex+=objFilterApp.sex+'%IN%';
+        concatSex+=objFilterApp.sex[key]+'%IN%';
     }
 
 
-     json.kv.fkPriceListId=concatPurpose;
+     json.kv.purpose=concatPurpose;
 
-     json.kv.id=concatPatientApp;
-     json.kv.inspectionCode=concatDoctor
+     json.kv.fkDoctorUserId=concatDoctor;
+     json.kv.fkPatientId=concatPatientApp;
+
 
      json.kv.appointmentStatusName=concatStatus
 
-     json.kv.sexName=concatSex
+     json.kv.sex=concatSex
   
 
     var data = JSON.stringify(json);
@@ -1200,30 +1223,94 @@ function getFilterAppointment(objFilterApp, currentPage){
 
 }
 
-// function FinishSession(){
-//     var json = {kv: {}};
+function FinishSession(id){
+    if (confirm('Are you sure ?')) {
+    var json = {kv: {}};
 
-//     try {
-//         json.kv.cookie = getToken();
+    try {
+        json.kv.cookie = getToken();
        
-//     } catch (err) {
+    } catch (err) {
 
-//     }
+    }
+  
+    json.kv.id=id
+    var data = JSON.stringify(json);
 
-//     var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrFinishSession",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
 
-//     $.ajax({
-//         url: urlGl + "api/post/srv/serviceCrFinishSession",
-//         type: "POST",
-//         data: data,
-//         contentType: "application/json",
-//         crossDomain: true,
-//         async: true,
-//         success: function (res) {
-//            console.log('ok')
-//         },
-//         error: function (res, status) {
-//             //  lert(getMessage('somethingww'));
-//         }
-//     });
-// }
+           
+               
+                    $('#appointmentListTable').DataTable().destroy();
+
+                    GetAppointmentList(1, 10);  
+                
+       
+        
+        },
+        error: function (res, status) {
+            //  lert(getMessage('somethingww'));
+        }
+    });
+}
+}
+
+
+
+// Session search
+$(document).on('keyup','#sessionSearch', function(){
+    let val =$(this).val(); 
+    let allData='%%'+val+'%%';
+    
+
+    var startLimit_a= pageNumber * pageRowCountAppointment - pageRowCountAppointment
+ 
+    var json = { kv: {} };
+    try {
+        json.kv.cookie = getToken();
+        json.kv.startLimit = startLimit_a; 
+        json.kv.endLimit = pageNumber_a*pageRowCountAppointment; 
+    } catch (err) {
+   
+    }
+    // json.kv.patientName=allData;
+    //  json.kv.purpose=allData;
+    //  json.kv.moduleName=allData;
+    //  json.kv.doctorFullname=allData;
+    //  json.kv.appointmentStatusName=allData;
+     
+  
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetAppointmentList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#appointmentListTable').DataTable().destroy();  
+
+            doctorDataTable(res, 0)                    
+              if( res.tbl[0] === undefined){        
+                appointmentListTableGen(pageNumber_a, 10, pageRowCountAppointment);
+                
+            } else{
+                appointmentListTableGen(pageNumber_a, res.tbl[0].rowCount, pageRowCountAppointment);
+            }
+         
+            },
+        error: function (res, status) {
+            lert(getMessage('somethingww'));
+        }
+    });
+
+})

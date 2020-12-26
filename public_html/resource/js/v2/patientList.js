@@ -1397,146 +1397,6 @@ function generalPatientFn(id) {
 
 }
 
-// ekrana gelen buttonlar
-function questionDropMenu(res, id) {
-
-    document.getElementById('bodyDiv').innerHTML = res.kv.body
-
-
-    subModal = $(".apd-subm-attr-button").first().attr("submodule_id");
-
-
-
-    // console.log(smodule_id)
-    $(".apd-page-btn button").each(function () {
-        var val = $(this);
-        var subModal = val.attr("submodule_id")
-        var list = $("#dropMenuQues" + id);
-        var l = $('<div>')
-        .append($('<a>')
-                .attr('href', '#')
-                .attr('onclick', 'questioModal(' + id + ')')
-                .attr('submodule_id', subModal)
-            .addClass('apd-subm-attr-button dropdown-item')
-                .attr('data-toggle', 'modal')
-                .attr('data-target', '#popup1')
-                .append(val.text()))
-        list.append(l)
-    });
-}
-
-function questioFnArea(id) {
-
-    console.log(id)
-    var json = {kv: {}};
-
-    try {
-        json.kv.cookie = getToken();
-
-    } catch (err) {
-
-    }
-    json.kv.fkSessionId = id;
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGenSubmoduleButtonList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            questionDropMenu(res, id)
-        },
-        error: function (res, status) {
-            //  lert(getMessage('somethingww'));
-        }
-    });
-}
-
-
-// end // ekrana gelen buttonlar
-
-function questionBody(res) {
-
-
-    var bodyFn2 = $('#questionBody').html('')
-    var b2 = $('<div>')
-            .append($('<div>')
-                .addClass('modal-header')
-                .append($('<h5>')
-                .append(res.kv.header)))
-            .append($('<div>')
-                .addClass('quastionBodyModalClass col-12')
-                .append(res.kv.body))
-
-            .append($('<div>')
-                .addClass('modal-footer col-12')
-            .append($('<button>')
-                    .attr('type', "button")
-                .addClass('btn btn-light btn-prev')
-                .append("Prev"))
-            .append($('<button>')
-                    .attr('type', "button")
-                .addClass('btn btn-light btn-next')
-                .append("Next"))
-            .append($('<button>')
-                    .attr('type', "button")
-                .addClass('btn btn-light')
-                 .append("Insert"))
-            .append($('<button>')
-                    .attr('type', "button")
-                .addClass('btn btn-light')
-                .append("Close"))
-                    )
-
-
-    bodyFn2.append(b2)
-
-    $('.quastionBodyModalClass').children().addClass('row')
-    $('.dropMenuQues').children().addClass('selectStyle')
-}
-
-function questioModal(id) {
-
-
-    var json = {kv: {}};
-
-    try {
-        json.kv.cookie = getToken();
-
-    } catch (err) {
-
-    }
-
-    json.kv.fkSessionId = id;
-    json.kv.fkSubmoduleId = subModal;
-
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGetSubmoduleFormBody",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            questionBody(res)
-            nextPrev()
-            console.log()
-            console.log('-------->', res)
-            // console.log('===>', res.kv.body)
-        },
-        error: function (res, status) {
-            //  lert(getMessage('somethingww'));
-        }
-    });
-}
-
-
-
 
 
 
@@ -1802,7 +1662,7 @@ function genderFnFilter(e) {
                     .addClass('dropdown-item')
                     .attr('onclick','genderFnItemClick("'+obj[i].id+'")')
                     .attr('id', 'g'+ obj[i].id)
-                    .attr('value', obj[i].itemKey)
+                    .val(obj[i].itemKey)
                         .text(obj[i].itemValue);
                 List.append(p);
             }
@@ -1810,9 +1670,9 @@ function genderFnFilter(e) {
            
         }
     });
-
     
 }
+
 function genderFnItemClick(id){
    
    if($('#g'+ id).hasClass('active') && id==id){ 
@@ -1823,9 +1683,9 @@ function genderFnItemClick(id){
    $('#g'+ id).addClass('active'); 
 
    let text = $('#g'+ id).text();   
+   let textVal = $('#g'+ id).val();   
 
-   objFilter.gender[id]=text;
-
+   objFilter.gender[id]=textVal;
 
    getFilter(objFilter)
 
@@ -1909,7 +1769,9 @@ function eduFnItemClick(id){
 
    let text2 =$('#edu'+ id).text();  
 
-   objFilter.edu[id]=text2;
+   let text2Val =$('#edu'+ id).val();  
+
+   objFilter.edu[id]=text2Val;
 
    getFilter(objFilter)
   
@@ -1971,7 +1833,7 @@ function maritalStatusFnFilter() {
                     .addClass('dropdown-item')
                     .attr('onclick','maritualFnItemClick("'+obj[i].id+'")')
                         .attr('id', 'marturial'+ obj[i].id)
-                        .attr('value', obj[i].itemKey)
+                        .val(obj[i].itemKey)
                     .append(obj[i].itemValue);
                 List2.append(p);
             }
@@ -1988,9 +1850,10 @@ function maritualFnItemClick(id){
   
      $('#marturial'+ id).addClass('active'); 
 
-    let text3 =$('#marturial'+ id).text();  
+    let text3 =$('#marturial'+ id).text();
+    let text3Val =$('#marturial'+ id).val();  
   
-    objFilter.maritual[id]=text3;
+    objFilter.maritual[id]=text3Val;
 
     getFilter(objFilter)
 
@@ -2054,7 +1917,7 @@ function occupationFnFilter() {
                     .addClass('dropdown-item')
                     .attr('id', 'occu'+ obj[i].id)
                     .attr('onclick','occuFnItemClick("'+obj[i].id+'")')
-                    .attr('value', obj[i].itemKey)
+                    .val(obj[i].itemKey)
                 .append(obj[i].itemValue);
                 List3.append(p);
             }
@@ -2072,9 +1935,9 @@ function occuFnItemClick(id){
      $('#occu'+ id).addClass('active'); 
 
     let text4 =$('#occu'+ id).text();  
-
+    let text4Val =$('#occu'+ id).val();  
     
-    objFilter.occu[id]=text4;
+    objFilter.occu[id]=text4Val;
 
     getFilter(objFilter)
 
@@ -2158,8 +2021,9 @@ function bloodFnItemClick(id){
      $('#blood'+ id).addClass('active'); 
 
     let text5 =$('#blood'+ id).text(); 
+    let text5Val =$('#blood'+ id).val(); 
 
-    objFilter.bloodGroup[id]=text5;
+    objFilter.bloodGroup[id]=text5Val;
 
     getFilter(objFilter)
 
@@ -2519,28 +2383,30 @@ function getFilter(objFilter, currentPage){
     var concatOccu="";
     var concatBlood=""; 
 
-    
+  
 
     for (var key in objFilter.pasient) {
         concatPatient+=key+'%IN%';
     }
 
     for (var key in objFilter.gender) {
-        concatGender+=key+'%IN%';
-     }
-
+        concatGender+= objFilter.gender[key]+'%IN%';
+    } 
      for (var key in objFilter.edu) {
-        concatEdu+=key+'%IN%';
+        concatEdu+=objFilter.edu[key]+'%IN%';
     }
+
     for (var key in objFilter.maritual) {
-        concatMaritual+=key+'%IN%';
-    }
-    for (var key in objFilter.occu) {
-        concatOccu+=key+'%IN%';
+        concatMaritual+=objFilter.maritual[key]+'%IN%';
     }
     for (var key in objFilter.bloodGroup) {
-        concatBlood+=key+'%IN%';
+        concatBlood+=objFilter.bloodGroup[key]+'%IN%';
     }
+
+    for (var key in objFilter.occu) {
+        concatOccu+=objFilter.occu[key]+'%IN%';
+    }
+
  
 
      json.kv.fkPatientId=concatPatient;
@@ -2630,7 +2496,7 @@ $(document).on('keyup','#patientSearch', function(){
 })
      
 function deletePatient(id ){
-
+    if (confirm('Are you sure ?')) {
     var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
@@ -2650,20 +2516,158 @@ function deletePatient(id ){
         crossDomain: true,
         async: true,
         success: function () {
-         
-            alert('Məlumat silindi')
+
       $('#patientListTable').DataTable().destroy();
 
        GetPatientList(1, 10);                       
          
         }
     });
-
+    }
 
 }
 
 
 
+
+// ekrana gelen buttonlar
+function questionDropMenu(res, id) {
+
+    document.getElementById('bodyDiv').innerHTML = res.kv.body
+
+
+    subModal = $(".apd-subm-attr-button").first().attr("submodule_id");
+
+
+    $(".apd-page-btn button").each(function () {
+        var val = $(this);
+        var subModal = val.attr("submodule_id")
+        
+        var list = $("#dropMenuQues" + id);
+        var l = $('<div>')
+        .append($('<a>')
+                .attr('href', '#')
+                .attr('onclick', 'questioModal("'+id+'")')
+                .attr('submodule_id', subModal)
+            .addClass('apd-subm-attr-button dropdown-item')
+                .attr('data-toggle', 'modal')
+                .attr('data-target', '#popup1')
+                .append(val.text()))
+        list.append(l)
+    });
+}
+
+function questioFnArea(id) {
+
+    var json = {kv: {}};
+
+    try {
+        json.kv.cookie = getToken();
+
+    } catch (err) {
+
+    }
+
+    json.kv.fkSessionId = id;
+
+    console.log(id, 'quseion')
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGenSubmoduleButtonList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            questionDropMenu(res, id)
+        },
+        error: function (res, status) {
+            //  lert(getMessage('somethingww'));
+        }
+    });
+}
+
+
+// end // ekrana gelen buttonlar
+
+function questionBody(res) {
+    
+    var bodyFn2 = $('#questionBody').html('')
+    var b2 = $('<div>')
+            .append($('<div>')
+                .addClass('modal-header')
+                .append($('<h5>')
+                .append(res.kv.header)))
+            .append($('<div>')
+                .addClass('quastionBodyModalClass col-12')
+                .append(res.kv.body))
+
+            .append($('<div>')
+                .addClass('modal-footer col-12')
+            .append($('<button>')
+                    .attr('type', "button")
+                .addClass('btn btn-light btn-prev')
+                .append("Prev"))
+            .append($('<button>')
+                    .attr('type', "button")
+                .addClass('btn btn-light btn-next')
+                .append("Next"))
+            .append($('<button>')
+                    .attr('type', "button")
+                .addClass('btn btn-light')
+                 .append("Insert"))
+            .append($('<button>')
+                    .attr('type', "button")
+                .addClass('btn btn-light')
+                .append("Close"))
+                    )
+
+
+    bodyFn2.append(b2)
+
+    $('.quastionBodyModalClass').children().addClass('row')
+    $('.dropMenuQues').children().addClass('selectStyle')
+}
+
+function questioModal(id) {
+
+    console.log(id, "jjsjs")
+ 
+    var json = {kv: {}};
+
+    try {
+        json.kv.cookie = getToken();
+      
+
+    } catch (err) {
+
+    }
+    json.kv.fkSubmoduleId = subModal;
+    json.kv.fkSessionId =id;
+
+
+    console.log(id, subModal, 'modal pis')
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetSubmoduleFormBody",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            questionBody(res)
+           
+           
+        },
+        error: function (res, status) {
+            //  lert(getMessage('somethingww'));
+        }
+    });
+}
 
    
 

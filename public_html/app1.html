@@ -37,7 +37,7 @@
                 <ul>
                     <!-- Home Navbar menu -->
                    
-                        <li class="drop-down"> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
+                        <li class="drop-down active"> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
                         <li class="drop-down"> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Patients</a></li>
                       
                     <!-- Finance Navbar menu -->
@@ -139,9 +139,9 @@
                                     <ul >
                                         <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#incModal" onclick="getIncspection()"><i class="fa fa-user-md" aria-hidden="true" ></i><span>Müayinə siyahisi</span></a></li>
-                                        <li><a href="#"><i class="fa fa-stethoscope" aria-hidden="true"></i><span>Sessiya siyahisi</span></a></li>
-                                        <li><a href="#"><i class="fa fa-medkit" aria-hidden="true" ></i><span>Sessiyanı bitir</span></a></li>
-                                        <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i><span>Hesabat/Print</span></a></li>
+                                        <!-- <li><a href="#"><i class="fa fa-stethoscope" aria-hidden="true"></i><span>Sessiya siyahisi</span></a></li> -->
+                                        <!-- <li><a href="#"><i class="fa fa-medkit" aria-hidden="true" ></i><span>Sessiyanı bitir</span></a></li>
+                                        <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i><span>Hesabat/Print</span></a></li> -->
                                     </ul>
                                 </nav>
                             </div>
@@ -186,11 +186,11 @@
                    
                     <div class="hide-content-appointem"> 
                         <div class="col-12 d-flex justify-content-end mb-2 pr-0">
-                            <!-- <div class="dataTables_filter">
+                            <div class="dataTables_filter">
                                 <label>
-                                   <input type="text" id="patientSearch">
+                                   <input type="text" id="sessionSearch">
                                 </label>
-                            </div>   -->
+                            </div>  
                             <span class="menu-filter title-tip" onclick="FilterToggle_Appointmet()" id="filter-btn-appointment" orginal-title="Filter"><i class="fa fa-filter"></i></span>  
                         </div> 
                        </div>
