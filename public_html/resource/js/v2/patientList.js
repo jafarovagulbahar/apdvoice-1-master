@@ -1255,7 +1255,7 @@ function rhFactorFn() {
 // end All pasientList add---------------------------------
 
 
-//5. start Pasient DataTable----------------------------------------
+//5. start Pasient DataTable-------------------------------
 
 // var maxPageLimit;
 
@@ -1369,7 +1369,6 @@ function PasientDataTable(res, startLimit) {
 }
 }
 
-
 function generalPatientFn(id) {
 
     var json = {kv: {}};
@@ -1396,10 +1395,6 @@ function generalPatientFn(id) {
     });
 
 }
-
-
-
-
 
 // Müayinə Siyahisi
 function incspectionTable(res) {
@@ -2535,24 +2530,27 @@ function questionDropMenu(res, id) {
 
     document.getElementById('bodyDiv').innerHTML = res.kv.body
 
-
     subModal = $(".apd-subm-attr-button").first().attr("submodule_id");
 
 
     $(".apd-page-btn button").each(function () {
         var val = $(this);
-        var subModal = val.attr("submodule_id")
+        var subModalId = val.attr("submodule_id")
         
         var list = $("#dropMenuQues" + id);
+   
+      
         var l = $('<div>')
         .append($('<a>')
                 .attr('href', '#')
-                .attr('onclick', 'questioModal("'+id+'")')
-                .attr('submodule_id', subModal)
+                .attr('onclick', 'questioModal("'+id+'","'+subModalId+'")')
+                .attr('submodule_id', subModalId)
             .addClass('apd-subm-attr-button dropdown-item')
+              
                 .attr('data-toggle', 'modal')
                 .attr('data-target', '#popup1')
                 .append(val.text()))
+        
         list.append(l)
     });
 }
@@ -2569,8 +2567,6 @@ function questioFnArea(id) {
     }
 
     json.kv.fkSessionId = id;
-
-    console.log(id, 'quseion')
 
     var data = JSON.stringify(json);
     $.ajax({
@@ -2592,7 +2588,7 @@ function questioFnArea(id) {
 
 // end // ekrana gelen buttonlar
 
-function questionBody(res) {
+function questionBody(res, id, subModalId)  {
     
     var bodyFn2 = $('#questionBody').html('')
     var b2 = $('<div>')
@@ -2608,14 +2604,17 @@ function questionBody(res) {
                 .addClass('modal-footer col-12')
             .append($('<button>')
                     .attr('type', "button")
+                    .addClass('apd-form-submodule-attr-prvs')
                 .addClass('btn btn-light btn-prev')
                 .append("Prev"))
             .append($('<button>')
                     .attr('type', "button")
+                   
                 .addClass('btn btn-light btn-next')
                 .append("Next"))
             .append($('<button>')
                     .attr('type', "button")
+                    // .attr('onclick', 'serviceCrInsertNewInspection("'+id+'","'+subModalId+'")')
                 .addClass('btn btn-light')
                  .append("Insert"))
             .append($('<button>')
@@ -2631,9 +2630,7 @@ function questionBody(res) {
     $('.dropMenuQues').children().addClass('selectStyle')
 }
 
-function questioModal(id) {
-
-    console.log(id, "jjsjs")
+function questioModal(id, subModalId) {
  
     var json = {kv: {}};
 
@@ -2644,11 +2641,11 @@ function questioModal(id) {
     } catch (err) {
 
     }
-    json.kv.fkSubmoduleId = subModal;
+   
+    json.kv.fkSubmoduleId = subModalId;
     json.kv.fkSessionId =id;
 
 
-    console.log(id, subModal, 'modal pis')
 
     var data = JSON.stringify(json);
     $.ajax({
@@ -2660,6 +2657,7 @@ function questioModal(id) {
         async: false,
         success: function (res) {
             questionBody(res)
+            
            
            
         },
@@ -2669,6 +2667,41 @@ function questioModal(id) {
     });
 }
 
+// function serviceCrInsertNewInspection(id, subModalId) {
+    
+//     var json = {kv: {}};
+
+//     try {
+//         json.kv.cookie = getToken();
+      
+
+//     } catch (err) {
+
+//     }
+   
+//     json.kv.fkSubmoduleId = subModalId;
+//     json.kv.fkSessionId =id;
+
+
+//     var data = JSON.stringify(json);
+//     $.ajax({
+//         url: urlGl + "api/post/srv/serviceCrInsertNewInspection",
+//         type: "POST",
+//         data: data,
+//         contentType: "application/json",
+//         crossDomain: true,
+//         async: false,
+//         success: function (res) {
+//             questioModal(id, subModalId) 
+            
+           
+           
+//         },
+//         error: function (res, status) {
+//             //  lert(getMessage('somethingww'));
+//         }
+//     });
+// }
    
 
   
