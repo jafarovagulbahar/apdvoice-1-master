@@ -19,6 +19,9 @@ var Utility = {
         }
     },
     GetConvertedDate: function (elementId) {
+        if (!$('#' + elementId).val()) {
+            return;
+        }
         var date = new Date($('#' + elementId).val());
         if (!date) {
             return '';
@@ -33,22 +36,28 @@ var Utility = {
     },
     AJAXCallFeedback: function (data, elementId) {
         var d = data;
-
+        var idx = 0;
+        $('.apd-form-error-msg').remove();
         if ((d.err.length) && d.err.length > 0) {
             //there are/is errors
             for (var i in d.err) {
                 try {
                     if (d.err[i].code === 'general') {
+                        idx++;
                         Utility.Toaster.ShowError(d.err[i].val);
                         return;
                     } else {
-                        $('#' + elementId).closest("div.main-form").
+                        idx++;
+                        $('#' + elementId).closest(".control-container").
                                 find("[id=" + d.err[i].code + "]").
                                 after('<p class=\'apd-form-error-msg\'>' + d.err[i].val + '</p>');
                     }
                 } catch (err) {
                 }
             }
+        }
+        if (idx > 0) {
+            throw new "There is (are) some exception(s)"
         }
     },
     Toaster: {
@@ -131,6 +140,18 @@ var Utility = {
             setTimeout(function () {
                 $('#' + id).toast('hide');
             }, 3000);
+        }
+    },
+
+    SetConvertedDate: function (componentId, date) {
+        try {
+            var day = date.substring(6, 8);
+            var month = date.substring(4, 6);
+            var year = date.substring(0, 4);
+            var d = year + "-" + month + "-" + day;
+            $('#' + componentId).val(d);
+        } catch (e) {
+
         }
     }
 }
