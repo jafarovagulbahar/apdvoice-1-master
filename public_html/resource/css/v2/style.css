@@ -40,6 +40,11 @@ ul{
     list-style: none;
     margin-bottom: 0rem;
 }
+/* modal */
+.pasientModal{
+  min-width: 80%;
+  bottom: 145px;
+}
 
 /* title-tip down */
 .title-tip[orginal-title]:hover {
@@ -1081,6 +1086,8 @@ label {
 .isNowLabel .toDoLi{
     display: none;
 }
+
+
 [type=checkbox]:checked + span:before {
     content: '\2714';
     position: absolute;
@@ -1100,18 +1107,11 @@ label {
     font-size:14px;
 }
 
-.patientMandatory{
-    /* border:none; */
-}
-.patientMandatoryDate,
-.patientMandatoryTime1,
-.patientMandatoryTime2{
-    /* border:none; */
-}
-
 .timesLabel{
     display: flex;
 }
+
+
 .pasientLabel{
     display: flex;
 }

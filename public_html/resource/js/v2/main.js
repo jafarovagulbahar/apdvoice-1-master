@@ -239,9 +239,8 @@ $(document).one( "click","#sexOneClick", function() {
 });
 
  
-  $(document).on("click", "nav li",function(event) { 
-    
-     $("nav li ").removeClass("active"); 
+  $(document).on("click", "nav .activeNav",function(event) {    
+     $("nav .activeNav").removeClass("active"); 
      $(this).addClass("active"); 
   });
 
