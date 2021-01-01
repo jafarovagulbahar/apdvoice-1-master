@@ -40,6 +40,11 @@ ul{
     list-style: none;
     margin-bottom: 0rem;
 }
+/* modal */
+.pasientModal{
+  min-width: 80%;
+  bottom: 145px;
+}
 
 /* title-tip down */
 .title-tip[orginal-title]:hover {
@@ -1102,11 +1107,11 @@ label {
     font-size:14px;
 }
 
-
-
 .timesLabel{
     display: flex;
 }
+
+
 .pasientLabel{
     display: flex;
 }

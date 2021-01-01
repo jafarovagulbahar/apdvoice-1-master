@@ -7,7 +7,12 @@
         display: none;
         color: #fff;
     }
-
+}
+@media (min-width: 470px) and (max-width: 576px){
+    .modal-dialog{
+       
+        bottom: -50px !important;
+    }
 }
 
 @media (min-width: 576px){
@@ -26,6 +31,7 @@
     .banner{
         margin-bottom: 20px;
     }
+    
 }
 
 @media (max-width: 500px){
@@ -72,6 +78,7 @@
     }
     .modal-dialog{
         margin: 13.75rem auto;
+        
     }
     /* .dataTables_filter > label > input:focus {
         width: 50px !important;

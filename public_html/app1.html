@@ -16,15 +16,18 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+        <link rel="stylesheet" type="text/css" href="resource/css/v2/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.jqueryui.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.jqueryui.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css">
+        <link rel="stylesheet" type="text/css" href="resource/css/v2/dataTables.jqueryui.min.css">
+        <link rel="stylesheet" type="text/css" href="resource/css/v2/buttons.jqueryui.min.css">
+        <link rel="stylesheet" type="text/css" href="resource/css/v2/dataTables.responsive.css">
 
         <!-- Vendor CSS Files -->
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="resource/css/bootstrap.min.css" rel="stylesheet">
-
+         <!-- Main CSS File -->
+        <link href="resource/css/v2/style.css" rel="stylesheet">
+        <link href="resource/css/v2/responsive.css" rel="stylesheet">
        
     </head>
 
@@ -37,8 +40,8 @@
                 <ul>
                     <!-- Home Navbar menu -->
                    
-                        <li class="drop-down active"> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
-                        <li class="drop-down"> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Patients</a></li>
+                        <!-- <li class="drop-down active"> <a  style="cursor:pointer"  onclick="menuAppointmentListLoad()" id="menuSessionList">Sessions</a></li>
+                        <li class="drop-down"> <a  style="cursor:pointer" onclick="menuPatientListLoad()" >Patients</a></li> -->
                       
                     <!-- Finance Navbar menu -->
                     <li class="drop-down"><a href="#">Maliyyə <i class="fa fa-angle-down"></i></a>
@@ -137,11 +140,12 @@
                             <div class="banner">
                                 <nav class="nav-menu2">
                                     <ul >
-                                        <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
+                                
+                                        <li class="activeNav"><a href="#"><i class="fa fa-stethoscope " aria-hidden="true" onclick="menuAppointmentListLoad()" id="menuSessionList"></i><span>Sessiya siyahisi</span></a></li>
+                                        <li class="activeNav"><a href="#"><i class="fa fa-medkit " aria-hidden="true" onclick="menuPatientListLoad()" ></i><span>Pasient siyahisi</span></a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#incModal" onclick="getIncspection()"><i class="fa fa-user-md" aria-hidden="true" ></i><span>Müayinə siyahisi</span></a></li>
-                                        <!-- <li><a href="#"><i class="fa fa-stethoscope" aria-hidden="true"></i><span>Sessiya siyahisi</span></a></li> -->
-                                        <!-- <li><a href="#"><i class="fa fa-medkit" aria-hidden="true" ></i><span>Sessiyanı bitir</span></a></li>
-                                        <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i><span>Hesabat/Print</span></a></li> -->
+                                        <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
+                                        <!-- <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i><span>Hesabat/Print</span></a></li> -->
                                     </ul>
                                 </nav>
                             </div>
@@ -176,7 +180,7 @@
 
              
 
-                <div class="col-md-12 apd-page-btn" id='bodyDiv' style="display: none;">
+                <div class="col-md-12 apd-page-btn" id='bodyDiv' >
 
                 </div>
                 
@@ -233,7 +237,7 @@
                                 <div class="copyright mt-3">
                                     <strong> &copy; 2018 APDVoice. All Rights Reserved.</strong>
                                     <em>15551, Sepapaja 6, Tallinn Estonia</em>
-                                    <em>info@apdvoice.com</em>
+                                    <em><a href="mailto:info@apdvoice.com">info@apdvoice.com</a></em>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +255,7 @@
 
     <!--1. Pasient Add Modal -->
     <div class="modal fade" id="pasientAddModal" tabindex="-1" role="dialog" aria-labelledby="pasientAddModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="min-width:80%">
+        <div class="modal-dialog pasientModal" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pasientAddModalLabel">Yeni Pasient Əlavə Et!</h5>
@@ -706,34 +710,29 @@
         </div>
     </div>
 
- <!-- Main CSS File -->
- <link href="resource/css/v2/style.css" rel="stylesheet">
- <link href="resource/css/v2/responsive.css" rel="stylesheet">
-
+ <!-- Plugins JS files -->
  <script src="resource/js/jquery.min.js"></script>
  <script src="resource/js/link.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+ <script src="resource/js/v2/popper.min.js"></script>
  <script src="resource/js/bootstrap.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.jqueryui.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.jqueryui.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.js"></script>  
-
- <script src="https://cdn.rawgit.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-
- <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/FileSaver.js"></script>
- <script src="https://www.jqueryscript.net/demo/Export-Html-To-Word-Document-With-Images-Using-jQuery-Word-Export-Plugin/jquery.wordexport.js"></script>
+ <script type="text/javascript" src="resource/js/v2/jquery.dataTables.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/dataTables.jqueryui.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/dataTables.buttons.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/buttons.jqueryui.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/jszip.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/pdfmake.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/vfs_fonts.js"></script> 
+ <script type="text/javascript" src="resource/js/v2/buttons.html5.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/buttons.print.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/buttons.colVis.min.js"></script>
+ <script type="text/javascript" src="resource/js/v2/dataTables.responsive.js"></script>  
+ <script src="resource/js/v2/jquery.bootpag.min.js"></script>
+ <script src="resource/js/v2/FileSaver.js"></script>
+ <script src="resource/js/v2/jquery.wordexport.js"></script>
+ <!-- Proje JS files -->
  <script src="resource/js/v2/main.js"></script>
  <script src="resource/js/v2/patientList.js"></script>
  <script src="resource/js/v2/appointmentList.js"></script>
- 
  <script src="resource/js/v2/utility.js"></script>
 
 

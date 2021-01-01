@@ -167,29 +167,29 @@ function patientListTableGen(currentPage, rowCount, pageRowCount) {
 
   
 
-// Next Prev Modal Fn
-function nextPrev() {
-    $("div[id^='popup1']").each(function () {
+// // Next Prev Modal Fn
+// function nextPrev() {
+//     $('#popup1').each(function () {
 
-        var currentModal = $(this);
+//         var currentModal = $(this);
 
-        //click next
-        currentModal.find('.btn-next').click(function () {
-            currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']")
-                .nextAll("div[id^='popup1']")
-                .first().modal('show');
-        });
+//         //click next
+//         currentModal.find('.btn-next').click(function () {
+//             currentModal.modal('hide');
+//             currentModal.closest("#popup1")
+//                 .nextAll('#popup1')
+//                 .first().modal('show');
+//         });
 
-        //click prev
-        currentModal.find('.btn-prev').click(function () {
-            currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']")
-                .prevAll("div[id^='popup1']")
-                .first().modal('show');
-        });
-    });
-}
+//         //click prev
+//         currentModal.find('.btn-prev').click(function () {
+//             currentModal.modal('hide');
+//             currentModal.closest("#popup1")
+//                 .prevAll('#popup1')
+//                 .first().modal('show');
+//         });
+//     });
+// }
 
 
 // patient selectbox value append
@@ -243,11 +243,11 @@ $(document).on("keyup", '.patientMandatory', function (e) {
 })
 
 $(document).on("click", '.patientMandatoryDate', function (e) {
-    $('.patientMandatoryDate').css('border', 'none')
+    // $('.patientMandatoryDate').css('border', 'none')
     $('.mandatoryIcon').css('display', 'none')
 })
 $(document).on("keyup", '.patientMandatoryTime1', function (e) {
-    $('.patientMandatoryTime1').css('border', 'none')
+    // $('.patientMandatoryTime1').css('border', 'none')
     $('.mandatoryIcon').css('display', 'none')
 })
 $(document).on("keyup", '.patientMandatoryTime2', function (e) {
@@ -1390,6 +1390,7 @@ function generalPatientFn(id) {
         async: true,
         success: function (res) {
             addNewSessiaArea()
+        
             
         }
     });
@@ -2524,185 +2525,6 @@ function deletePatient(id ){
 
 
 
-
-// ekrana gelen buttonlar
-function questionDropMenu(res, id) {
-
-    document.getElementById('bodyDiv').innerHTML = res.kv.body
-
-    subModal = $(".apd-subm-attr-button").first().attr("submodule_id");
-
-
-    $(".apd-page-btn button").each(function () {
-        var val = $(this);
-        var subModalId = val.attr("submodule_id")
-        
-        var list = $("#dropMenuQues" + id);
-   
-      
-        var l = $('<div>')
-        .append($('<a>')
-                .attr('href', '#')
-                .attr('onclick', 'questioModal("'+id+'","'+subModalId+'")')
-                .attr('submodule_id', subModalId)
-            .addClass('apd-subm-attr-button dropdown-item')
-              
-                .attr('data-toggle', 'modal')
-                .attr('data-target', '#popup1')
-                .append(val.text()))
-        
-        list.append(l)
-    });
-}
-
-function questioFnArea(id) {
-
-    var json = {kv: {}};
-
-    try {
-        json.kv.cookie = getToken();
-
-    } catch (err) {
-
-    }
-
-    json.kv.fkSessionId = id;
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGenSubmoduleButtonList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            questionDropMenu(res, id)
-        },
-        error: function (res, status) {
-            //  lert(getMessage('somethingww'));
-        }
-    });
-}
-
-
-// end // ekrana gelen buttonlar
-
-function questionBody(res, id, subModalId)  {
-    
-    var bodyFn2 = $('#questionBody').html('')
-    var b2 = $('<div>')
-            .append($('<div>')
-                .addClass('modal-header')
-                .append($('<h5>')
-                .append(res.kv.header)))
-            .append($('<div>')
-                .addClass('quastionBodyModalClass col-12')
-                .append(res.kv.body))
-
-            .append($('<div>')
-                .addClass('modal-footer col-12')
-            .append($('<button>')
-                    .attr('type', "button")
-                    .addClass('apd-form-submodule-attr-prvs')
-                .addClass('btn btn-light btn-prev')
-                .append("Prev"))
-            .append($('<button>')
-                    .attr('type', "button")
-                   
-                .addClass('btn btn-light btn-next')
-                .append("Next"))
-            .append($('<button>')
-                    .attr('type', "button")
-                    // .attr('onclick', 'serviceCrInsertNewInspection("'+id+'","'+subModalId+'")')
-                .addClass('btn btn-light')
-                 .append("Insert"))
-            .append($('<button>')
-                    .attr('type', "button")
-                .addClass('btn btn-light')
-                .append("Close"))
-                    )
-
-
-    bodyFn2.append(b2)
-
-    $('.quastionBodyModalClass').children().addClass('row')
-    $('.dropMenuQues').children().addClass('selectStyle')
-}
-
-function questioModal(id, subModalId) {
- 
-    var json = {kv: {}};
-
-    try {
-        json.kv.cookie = getToken();
-      
-
-    } catch (err) {
-
-    }
-   
-    json.kv.fkSubmoduleId = subModalId;
-    json.kv.fkSessionId =id;
-
-
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceCrGetSubmoduleFormBody",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            questionBody(res)
-            
-           
-           
-        },
-        error: function (res, status) {
-            //  lert(getMessage('somethingww'));
-        }
-    });
-}
-
-// function serviceCrInsertNewInspection(id, subModalId) {
-    
-//     var json = {kv: {}};
-
-//     try {
-//         json.kv.cookie = getToken();
-      
-
-//     } catch (err) {
-
-//     }
-   
-//     json.kv.fkSubmoduleId = subModalId;
-//     json.kv.fkSessionId =id;
-
-
-//     var data = JSON.stringify(json);
-//     $.ajax({
-//         url: urlGl + "api/post/srv/serviceCrInsertNewInspection",
-//         type: "POST",
-//         data: data,
-//         contentType: "application/json",
-//         crossDomain: true,
-//         async: false,
-//         success: function (res) {
-//             questioModal(id, subModalId) 
-            
-           
-           
-//         },
-//         error: function (res, status) {
-//             //  lert(getMessage('somethingww'));
-//         }
-//     });
-// }
-   
 
   
 
