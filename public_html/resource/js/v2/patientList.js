@@ -9,6 +9,8 @@ function menuAppointmentListLoad() {
     current_modal = 'session';
     $('.content-body-appointmentlist').show();
     $('.content-body-patientlist').hide();
+    $('.appointment-form-intro').show() // patient elave etmek buttonu
+    $('.reportbtn').hide() //report button
     GetAppointmentList(1, 10);
 
 }
@@ -18,12 +20,9 @@ function menuPatientListLoad() {
     current_modal = 'patient';
     $('.content-body-patientlist').show();
     $('.content-body-appointmentlist').hide();
-
-
+    $('.appointment-form-intro').hide() // patient elave etmek buttonu
+ 
     GetPatientList(1, 10);
-
-
-
 }
 //    ----------------------------------------------------------
 // ConvertDate
@@ -166,33 +165,6 @@ function patientListTableGen(currentPage, rowCount, pageRowCount) {
 
     });
 
-}
-
-
-  
-
-// Next Prev Modal Fn
-function nextPrev() {
-    $("div[id^='popup1']").each(function () {
-
-        var currentModal = $(this);
-
-        //click next
-        currentModal.find('.btn-next').click(function () {
-            currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']")
-                .nextAll("div[id^='popup1']")
-                .first().modal('show');
-        });
-
-        //click prev
-        currentModal.find('.btn-prev').click(function () {
-            currentModal.modal('hide');
-            currentModal.closest("div[id^='popup1']")
-                .prevAll("div[id^='popup1']")
-                .first().modal('show');
-        });
-    });
 }
 
 
