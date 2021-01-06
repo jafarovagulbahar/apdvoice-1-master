@@ -244,3 +244,8 @@ $(document).one( "click","#sexOneClick", function() {
      $(this).addClass("active"); 
   });
 
+  $(document).on("change", ".form-group select", function() {    
+    $(this).find(':selected').addClass('selected')
+           .siblings('option').removeClass('selected');
+ });
+  

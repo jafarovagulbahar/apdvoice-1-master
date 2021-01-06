@@ -6,21 +6,25 @@
 var current_modal = 'session';
 
 function menuAppointmentListLoad() {
+    
     current_modal = 'session';
     $('.content-body-appointmentlist').show();
     $('.content-body-patientlist').hide();
     $('.appointment-form-intro').show() // patient elave etmek buttonu
     $('.reportbtn').hide() //report button
+    $('.content-body-updateCompanylist').hide() //update company info
     GetAppointmentList(1, 10);
 
 }
 
 
 function menuPatientListLoad() {
+    
     current_modal = 'patient';
     $('.content-body-patientlist').show();
     $('.content-body-appointmentlist').hide();
     $('.appointment-form-intro').hide() // patient elave etmek buttonu
+    $('.content-body-updateCompanylist').hide() //update company info
  
     GetPatientList(1, 10);
 }

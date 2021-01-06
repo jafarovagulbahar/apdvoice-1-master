@@ -16,6 +16,12 @@ a {
     color: #1977cc;
   
 }
+.btn-primary a{
+    color: #ffffff;
+}
+.btn-primary a:hover{
+    color: #ffffff;
+}
 .dropdown-item{
     word-break: break-all;
     white-space: normal;
@@ -45,7 +51,9 @@ ul{
   min-width: 80%;
   bottom: 145px;
 }
-
+.selected{
+    background-color: rgb(70 111 238 / 14%);
+}
 /* title-tip down */
 .title-tip[orginal-title]:hover {
     position: relative;
@@ -1478,3 +1486,4 @@ table li {
  #appointmentFilterAccordion .form-control{
      line-height: 1;
  }
+ /* ----------Profile------------------- */

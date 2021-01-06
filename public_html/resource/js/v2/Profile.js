@@ -1,22 +1,30 @@
 // load
 
+// LOAD PROFILE SECTION MENUS
+// Report load
 function menuReportListLoad() {
     $('.content-body-patientlist').hide();
     $('.content-body-appointmentlist').hide();
-    $('.content-body-reportlist').show();
-    $('.appointment-form-intro').hide() // patient elave etmek buttonu
+    $('.appointment-form-intro').hide() // patient add btn
+    $('.content-body-reportlist').show();  // reportList
     $('.reportbtn').show() //report button
+    $('.content-body-updateCompanylist').hide() //update company info
     GetReportList(1,10)
 }
-
-function updateCompanyInfoLoad() {
+// Company info load
+ function updateCompanyInfoLoad() {
     $('.content-body-patientlist').hide();
     $('.content-body-appointmentlist').hide();
-    $('.content-body-reportlist').hide();
-    $('.appointment-form-intro').hide() // patient elave etmek buttonu
+    $('.appointment-form-intro').hide() // patient add btn
     $('.reportbtn').hide() //report button
-    
+    $('.content-body-reportlist').hide();  // reportList
+    $('.content-body-updateCompanylist').show() //update company info
+    getOwnCompanyInfo() 
 }
+
+// ================== 1 =====================
+// Report List
+// ==========================================
 
 function ReportListTableGen(currentPage, rowCount, pageRowCount) {
 
@@ -329,6 +337,201 @@ function insertReportBody(res) {
         )
 
         incBodytable.append(t);
+
+}
+
+// ================== 2 =====================
+// Update Company Information
+// ==========================================
+
+function getOwnCompanyInfo() {
+
+    var json = {kv: {}};
+
+    try {
+        json.kv.cookie = getToken();
+
+    } catch (err) {
+
+    }
+
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetOwnCompanyInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            companyInfoBody(res) 
+        }
+    });
+
+}
+
+
+function companyInfoBody(res) {
+
+    var incBodytable = $('#updateCompanyList').html('');
+        var t = ($('<div>').addClass('row')
+// ----------------------------------------
+
+            .append($('<div>')
+                .addClass('form-group apd-form col-md-12')
+            .append($('<label>')
+                .append(res.tbl[0].c[3].companyName)
+            .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*'))
+                )
+           .append($('<input>')
+                .addClass('form-control selectStyle apd-form-input')
+                    .attr('type', 'text')
+                    .val(res.tbl[0].r[0].companyName)
+                    .attr('id', 'companyName')
+                   ))
+// ----------------------------------------
+         .append($('<div>').
+                addClass('form-group col-md-12')
+            .append($('<label>')
+                .append('Country')
+            .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*'))
+                )
+            .append($('<select>')
+                .addClass('noSearch selectStyle form-control')
+                .attr('id','companyCountry')
+            .append($('<option>')
+                .append('Azerbaijan')
+                .attr('value','1'))
+            .append($('<option>')
+                .append('Turkey')
+                .attr('value','2'))
+            .append($('<option>')
+                .append('Other')
+                .attr('value','3'))
+                ))
+// ----------------------------------------
+         .append($('<div>').
+                addClass('form-group col-md-12')
+            .append($('<label>')
+                .append("Currency")
+            .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*')))
+            .append($('<select>')
+                .addClass('noSearch selectStyle form-control')
+                .attr('id','companyCurrency')
+            .append($('<option>')
+                .append(res.tbl[0].r[0].companyCurrency)
+                .addClass('selected')
+                .addClass('mainOption')
+                .attr('value', '')) 
+            .append($('<option>')
+                .append('AZE')
+                .attr('value','AZE')) 
+            .append($('<option>')
+                .append('USD')
+                .attr('value','USD')) 
+            .append($('<option>')
+                .append('TL')
+                .attr('value','TL')) 
+               
+                ))
+// ----------------------------------------
+
+            .append($('<div>')
+            .addClass('form-group apd-form col-md-12')
+        .append($('<label>')
+            .append('Time Zone')
+        .append($('<span>')
+            .addClass('mandatoryIcon')
+            .append('*'))
+            )        
+        .append($('<select>')
+            .addClass('noSearch selectStyle form-control')
+            .attr('id','companyTimeZone')
+        .append($('<option>')
+            .append(res.tbl[0].r[0].companyTimeZone))     
+            ))
+               
+// ----------------------------------------
+           .append($('<div>')
+                .addClass('form-group apd-form col-md-12')
+            .append($('<label>')
+                .append("Address"))
+           .append($('<input>')
+                .addClass('form-control selectStyle apd-form-input')
+                    .attr('type', 'text')
+                    .val(res.tbl[0].r[0].companyAddress)
+                    .attr('id','companyAddress')
+                   ))
+// ----------------------------------------
+           .append($('<div>')
+                .addClass('form-group apd-form col-md-12')
+            .append($('<label>')
+                .append(res.tbl[0].c[8].logoUrl))
+           .append($('<input>')
+                .addClass('form-control selectStyle apd-form-input')
+                    .attr('type', 'file')
+                    .attr('value',res.tbl[0].r[0].logoUrl)
+                   ))
+// ----------------------------------------
+            .append($('<div>')
+               .addClass('form-group apd-form col-md-6')
+            .append($('<label>')
+            .append($('<span>')
+                .addClass('mandatoryIcon')
+                .append('*'))
+            .append('Required Fields')
+            ))
+// ----------------------------------------
+        .append($('<div>')
+            .addClass('form-group apd-form col-md-6')
+            .addClass('d-flex')
+            .addClass('justify-content-end')
+        .append($('<button>')
+            .addClass('btn btn-primary')
+        .append($('<a>')
+            .attr('href','#')
+            .attr('onclick','UpdateCompanyInfo()')
+            .append('Update')
+        )))
+        )
+        incBodytable.append(t);
+
+}
+
+function UpdateCompanyInfo() {
+
+    var json = {kv: {}};
+
+    try {
+        json.kv.cookie = getToken();
+
+    } catch (err) {
+
+    }
+  json.kv.companyName=$('#companyName').val()
+   json.kv.companyAddress=$('#companyAddress').val()
+   json.kv.companyCountry=$('#companyCountry').val()
+   json.kv.companyCurrency=$('#companyCurrency').val()
+   json.kv.companyTimezone=$('#companyTimeZone').val()
+     
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrUpdateCompanyInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+          
+        }
+    });
 
 }
 

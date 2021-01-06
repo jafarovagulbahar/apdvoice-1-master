@@ -70,13 +70,13 @@
                     <!-- Profile Navbar menu -->
                     <li class="drop-down"><a href="">Profil <i class="fa fa-angle-down"></i></a>
                         <ul>
-                            <li class="dropMenu"><a href="#">İstifadəçi</a></li>
+                            <li class="dropMenu activeNav"><a href="#">İstifadəçi</a></li>
                             <li class="dropMenu activeNav"><a href="#" onclick="menuReportListLoad()">Hesabat</a></li>
-                            <li class="dropMenu"><a href="#" onclick="updateCompanyInfoLoad()">Şirkət məlumatlarını dəyiş</a></li>
-                            <li class="dropMenu"><a href="#">Ödəniş tarixçəsi</a></li>
-                            <li class="dropMenu"><a href="#">Müayinə növü</a></li>
-                            <li class="dropMenu"><a href="#">Özəl Attributlar</a></li>
-                            <li class="dropMenu"><a href="#">Ödəniş növləri</a> </li>
+                            <li class="dropMenu activeNav"><a href="#" onclick="updateCompanyInfoLoad()">Şirkət məlumatlarını dəyiş</a></li>
+                            <li class="dropMenu activeNav"><a href="#">Ödəniş tarixçəsi</a></li>
+                            <li class="dropMenu activeNav"><a href="#">Müayinə növü</a></li>
+                            <li class="dropMenu activeNav"><a href="#">Özəl Attributlar</a></li>
+                            <li class="dropMenu activeNav"><a href="#">Ödəniş növləri</a> </li>
                         </ul>
                     </li>
                     <!-- language selector -->
@@ -148,135 +148,144 @@
     </header><!-- End Header -->
 
     
-        <!-- ======= patient List ======= -->
-        <section id="apdDataList " class="patientList">
-            <div class="container">     
-                <div class="col-12">
-                    <div class="row headerMenu">
+    <!-- ======= patient List ======= -->
+    <section id="apdDataList " class="patientList">
+        <div class="container">     
+            <div class="col-12">
+                <div class="row headerMenu">
 
-                        <div class="col-lg-6 col-md-12">
-                            <div class="banner">
-                                <nav class="nav-menu2">
-                                    <ul >
-                                
-                                        <li class="activeNav active"><a href="#" onclick="menuAppointmentListLoad()" id="menuSessionList"><i class="fa fa-stethoscope " aria-hidden="true" ></i><span>Sessiya siyahisi</span></a></li>
-                                        <li class="activeNav"><a href="#" onclick="menuPatientListLoad()" ><i class="fa fa-medkit " aria-hidden="true" ></i><span>Pasient siyahisi</span></a></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#incModal" onclick="getIncspection()"><i class="fa fa-user-md" aria-hidden="true" ></i><span>Müayinə siyahisi</span></a></li>
-                                        <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
-                                        <li class="reportbtn" onclick="insertReportCombo()"><a href="#" data-toggle="modal" data-target="#reportInsert" ><i class="fa fa-file"></i><span>Yeni Hesabat</span></a></li>
-                                     
-                                    </ul>
-                                </nav>
-                            </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="banner">
+                            <nav class="nav-menu2">
+                                <ul >
+                            
+                                    <li class="activeNav active"><a href="#" onclick="menuAppointmentListLoad()" id="menuSessionList"><i class="fa fa-stethoscope " aria-hidden="true" ></i><span>Sessiya siyahisi</span></a></li>
+                                    <li class="activeNav"><a href="#" onclick="menuPatientListLoad()" ><i class="fa fa-medkit " aria-hidden="true" ></i><span>Pasient siyahisi</span></a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#incModal" onclick="getIncspection()"><i class="fa fa-user-md" aria-hidden="true" ></i><span>Müayinə siyahisi</span></a></li>
+                                    <li id="sessiaBtn" ><a href="#" data-toggle="modal" data-target="#newSessiaModal" ><i class="fa fa-heartbeat"></i><span>Yeni Sessiya</span></a></li>
+                                    <li class="reportbtn" onclick="insertReportCombo()"><a href="#" data-toggle="modal" data-target="#reportInsert" ><i class="fa fa-file"></i><span>Yeni Hesabat</span></a></li>
+                                    
+                                </ul>
+                            </nav>
                         </div>
+                    </div>
 
-                        <div class="col-lg-6  col-md-12" >
-                            <div class="appointment-form-intro">
-                                <div class="d-flex">
-                                    <div class="form-group">
-                                        <div class="form-field">
-                                            <div class="main patientSelectBox" id="">                    
-                                                <div class="dropdown dropdown-select " >
-                                                    <span class="caret"></span>
-                                                    <input type="text" class="form-control  dropdown-toggle" placeholder="Pasientlər" autocomplete="off" id="pasientInput" data-toggle="dropdown" onclick="pasientFilter()"/>
-                                                    <div class="dropdown-menu"  aria-labelledby="dropPasient" id="patinetlistcombo">
+                    <div class="col-lg-6  col-md-12" >
+                        <div class="appointment-form-intro">
+                            <div class="d-flex">
+                                <div class="form-group">
+                                    <div class="form-field">
+                                        <div class="main patientSelectBox" id="">                    
+                                            <div class="dropdown dropdown-select " >
+                                                <span class="caret"></span>
+                                                <input type="text" class="form-control  dropdown-toggle" placeholder="Pasientlər" autocomplete="off" id="pasientInput" data-toggle="dropdown" onclick="pasientFilter()"/>
+                                                <div class="dropdown-menu"  aria-labelledby="dropPasient" id="patinetlistcombo">
 
-                                                    </div>
                                                 </div>
-
                                             </div>
+
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <button class="btn-custom form-control add-patinet-btn"  data-toggle="modal" data-target="#pasientAddModal" onclick="AddNewPasientArea()"><b>Pasient əlavə et <i class="fa fa-plus"> </i></b></button>
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn-custom form-control add-patinet-btn"  data-toggle="modal" data-target="#pasientAddModal" onclick="AddNewPasientArea()"><b>Pasient əlavə et <i class="fa fa-plus"> </i></b></button>
                                 </div>
                             </div>
                         </div>
-                    </div>   
-                </div>
-
-
-             
-
-                <div class="col-md-12 apd-page-btn" id='bodyDiv' >
-
-                </div>
-                
-              
-                <div class="content">   
-                 <!-- ======= appointmentlist List ======= -->
-                    <div class="content-body-appointmentlist content-body-class" >
-                   
-                    <div class="hide-content-appointem"> 
-                        <div class="col-12 d-flex justify-content-end mb-2 pr-0">
-                            <div class="dataTables_filter">
-                                <label>
-                                   <input type="text" id="sessionSearch">
-                                </label>
-                            </div>  
-                            <span class="menu-filter title-tip" onclick="FilterToggle_Appointmet()" id="filter-btn-appointment" orginal-title="Filter"><i class="fa fa-filter"></i></span>  
-                        </div> 
-                       </div>
-                        <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black" width="100%"> 
-                            <thead id="DoctorDataTableHeader"> </thead>
-                            <tbody id="DoctorDataTable">  </tbody>
-                        </table>
-                       <div class="col-12 d-flex justify-content-end">
-                        <p id="pagination-appointment"></p>
-                       </div>
                     </div>
-                <!-- ======= Patient List ======= -->
-                    <div class="content-body-patientlist content-body-class" >
-                       <div class="hide-content-pasient"> 
-                        <div class="col-12 d-flex justify-content-end mb-2 pr-0">
-                            <div class="dataTables_filter">
-                                <label>
-                                   <input type="text" id="patientSearch">
-                                </label>
-                            </div>  
-                            <span class="menu-filter title-tip" onclick="FilterToggle_patient()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span> 
-                        </div> 
-                       </div>
-                    
-                        <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black" width="100%"> 
-                            <thead id="PasinetTableThead"> </thead>
-                            <tbody id="PasinetTableBody">  </tbody>
-                        </table>
-                        <div class="col-12 d-flex justify-content-end">
-                            <p id="pagination-pasient"></p>
-                        </div>
-
-                    </div>
-                 <!-- =======Profile / Report List ======= -->
-                 <div class="content-body-reportlist content-body-class" >
-                     <table id="reportListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black" width="100%"> 
-                         <thead id="ReportTableThead"> </thead>
-                         <tbody id="ReportTableBody">  </tbody>
-                     </table>
-                     <div class="col-12 d-flex justify-content-end">
-                         <p id="pagination-report"></p>
-                     </div>
-                 </div>
-
-                    <footer class="footer">
-                        <div class="container col-12">
-
-                            <div class="mr-md-auto text-center">
-                                <div class="copyright mt-3">
-                                    <strong> &copy; 2018 APDVoice. All Rights Reserved.</strong>
-                                    <em>15551, Sepapaja 6, Tallinn Estonia</em>
-                                    <em><a href="mailto:info@apdvoice.com">info@apdvoice.com</a></em>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
+                </div>   
+            </div>
 
 
+            
+
+            <div class="col-md-12 apd-page-btn" id='bodyDiv' >
 
             </div>
-        </section>
+            
+            
+            <div class="content">   
+                <!-- ======= appointmentlist List ======= -->
+                <div class="content-body-appointmentlist content-body-class" >
+                
+                <div class="hide-content-appointem"> 
+                    <div class="col-12 d-flex justify-content-end mb-2 pr-0">
+                        <div class="dataTables_filter">
+                            <label>
+                                <input type="text" id="sessionSearch">
+                            </label>
+                        </div>  
+                        <span class="menu-filter title-tip" onclick="FilterToggle_Appointmet()" id="filter-btn-appointment" orginal-title="Filter"><i class="fa fa-filter"></i></span>  
+                    </div> 
+                    </div>
+                    <table id="appointmentListTable" class="table table-striped table-bordered " cellspacing="0" style="color:black" width="100%"> 
+                        <thead id="DoctorDataTableHeader"> </thead>
+                        <tbody id="DoctorDataTable">  </tbody>
+                    </table>
+                    <div class="col-12 d-flex justify-content-end">
+                    <p id="pagination-appointment"></p>
+                    </div>
+                </div>
+            <!-- ======= Patient List ======= -->
+                <div class="content-body-patientlist content-body-class" >
+                    <div class="hide-content-pasient"> 
+                    <div class="col-12 d-flex justify-content-end mb-2 pr-0">
+                        <div class="dataTables_filter">
+                            <label>
+                                <input type="text" id="patientSearch">
+                            </label>
+                        </div>  
+                        <span class="menu-filter title-tip" onclick="FilterToggle_patient()" id="filter-btn" orginal-title="Filter"><i class="fa fa-filter"></i></span> 
+                    </div> 
+                    </div>
+                
+                    <table id="patientListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black" width="100%"> 
+                        <thead id="PasinetTableThead"> </thead>
+                        <tbody id="PasinetTableBody">  </tbody>
+                    </table>
+                    <div class="col-12 d-flex justify-content-end">
+                        <p id="pagination-pasient"></p>
+                    </div>
+
+                </div>
+                <!-- =======Profile / Report List ======= -->
+                <div class="content-body-reportlist content-body-class" >
+                    <table id="reportListTable" class="table table-striped table-bordered" cellspacing="0"  style="color:black" width="100%"> 
+                        <thead id="ReportTableThead"> </thead>
+                        <tbody id="ReportTableBody">  </tbody>
+                    </table>
+                    <div class="col-12 d-flex justify-content-end">
+                        <p id="pagination-report"></p>
+                    </div>
+                </div>
+            <!-- =======Profile / Update Company Info ======= -->
+            <div class="content-body-updateCompanylist content-body-class" >
+                <div id="updateCompanyList"> 
+                
+                </div>
+            </div>
+
+
+
+
+                <footer class="footer">
+                    <div class="container col-12">
+
+                        <div class="mr-md-auto text-center">
+                            <div class="copyright mt-3">
+                                <strong> &copy; 2018 APDVoice. All Rights Reserved.</strong>
+                                <em>15551, Sepapaja 6, Tallinn Estonia</em>
+                                <em><a href="mailto:info@apdvoice.com">info@apdvoice.com</a></em>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+
+
+        </div>
+    </section>
 
    
 
