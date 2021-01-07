@@ -166,9 +166,7 @@ function FilterSectionToggleClose() {
 }
 
 $(document).one( "click","#filter-btn", function() {
-  pasientFilterSection()
-
-  
+  pasientFilterSection()  
 });
 // -------------Patient Filter Item Click------------------------
 $(document).one( "click","#genderOneClick", function() {

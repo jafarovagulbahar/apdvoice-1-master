@@ -9,6 +9,8 @@ function menuReportListLoad() {
     $('.content-body-reportlist').show();  // reportList
     $('.reportbtn').show() //report button
     $('.content-body-updateCompanylist').hide() //update company info
+    $('#filter-content').removeClass('open')  //patient Filter Close
+    $('#filter-content-appointment').removeClass('open') //appointmentList Filter Close
     GetReportList(1,10)
 }
 // Company info load
@@ -19,6 +21,8 @@ function menuReportListLoad() {
     $('.reportbtn').hide() //report button
     $('.content-body-reportlist').hide();  // reportList
     $('.content-body-updateCompanylist').show() //update company info
+    $('#filter-content').removeClass('open')  //patient Filter Close
+    $('#filter-content-appointment').removeClass('open') //appointmentList Filter Close
     getOwnCompanyInfo() 
 }
 

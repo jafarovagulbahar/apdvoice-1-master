@@ -13,6 +13,8 @@ function menuAppointmentListLoad() {
     $('.appointment-form-intro').show() // patient elave etmek buttonu
     $('.reportbtn').hide() //report button
     $('.content-body-updateCompanylist').hide() //update company info
+    $('#filter-content').removeClass('open')  //patient Filter Close
+    pasientFilterSection()  
     GetAppointmentList(1, 10);
 
 }
@@ -25,7 +27,9 @@ function menuPatientListLoad() {
     $('.content-body-appointmentlist').hide();
     $('.appointment-form-intro').hide() // patient elave etmek buttonu
     $('.content-body-updateCompanylist').hide() //update company info
- 
+    $('.hide-content-pasient').show()
+    $('#filter-content-appointment').removeClass('open') //appointmentList Filter Close
+    appointmentFilterSection()
     GetPatientList(1, 10);
 }
 //    ----------------------------------------------------------
